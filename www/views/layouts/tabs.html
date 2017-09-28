@@ -1,0 +1,25 @@
+<!--app navigation bar-->
+<ion-nav-bar class="bar-light bar-kusanya">
+    <ion-nav-back-button class="kusanya-nav-button">
+    </ion-nav-back-button>
+</ion-nav-bar>
+<!--end app navigation bar-->
+<!-- app tabs -->
+<ion-tabs class="tabs-light tabs-icon-top tabs-background-light tabs-color-dark tabs-kusanya">
+    <!-- overviews -->
+    <ion-tab title="Overviews" icon-off="ion-ios-albums-outline" icon-on="ion-ios-albums" ui-sref="app.overviews">
+        <ion-nav-view name="overviews"></ion-nav-view>
+    </ion-tab>
+    <!-- end overviews -->
+    <!-- performances -->
+    <ion-tab title="Performance" icon-off="ion-ios-photos-outline" icon-on="ion-ios-photos" ui-sref="app.performances">
+        <ion-nav-view name="performances"></ion-nav-view>
+    </ion-tab>
+    <!-- end performances -->
+    <!-- productivity-->
+    <ion-tab title="Productivity" icon-off="ion-ios-color-filter-outline" icon-on="ion-ios-color-filter" ui-sref="app.productivity">
+        <ion-nav-view name="productivity"></ion-nav-view>
+    </ion-tab>
+    <!-- end settings -->
+</ion-tabs>
+<!-- end app tabs -->
