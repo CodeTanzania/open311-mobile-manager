@@ -1,0 +1,32 @@
+<ion-view title="Signup" class="ion-blue">
+    <ion-nav-bar class="bar-primary" align-title="center">
+        <ion-nav-buttons side="primary">
+            <button class="button button-icon ion-blue icon ion-ios-arrow-left" ng-click="back()"></button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content scroll="false" class="login">
+        <ion-list class="list-item-no-border">
+            <ion-item class="item-input item-floating-label input">
+                <span class="input-label">Name</span>
+                <input type="text" placeholder="Name" ng-model="party.name" class="input-bordered">
+            </ion-item>
+            <ion-item class="item-input item-floating-label input">
+                <span class="input-label">Phone</span>
+                <input type="text" placeholder="Phone" ng-model="party.phoneNumber" class="input-bordered">
+            </ion-item>
+            <ion-item class="item-input item-floating-label input">
+                <span class="input-label">Email</span>
+                <input type="email" placeholder="Email" ng-model="party.email" class="input-bordered">
+            </ion-item>
+            <ion-item class="item-input item-floating-label input">
+                <span class="input-label">Password</span>
+                <input type="password" placeholder="Password" ng-model="party.password" class="input-bordered">
+            </ion-item>
+            <ion-item class="item-button mgn-t10">
+                <button class="button button-outline button-positive button-block mgn-t20" ng-click="register()">
+                    Register
+                </button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
