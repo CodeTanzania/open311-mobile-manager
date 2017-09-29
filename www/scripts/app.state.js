@@ -82,7 +82,18 @@ angular
         url: '/performance',
         views: {
           'performance': {
-            templateUrl: 'views/dashboards/performance.html',
+            templateUrl: 'views/dashboards/performance.html'
+          }
+        },
+        data: {
+          authenticated: true
+        }
+      })
+      .state('app.dashboard.standing', {
+        url: '/standing',
+        views: {
+          'standing': {
+            templateUrl: 'views/dashboards/standing.html'
           }
         },
         data: {
