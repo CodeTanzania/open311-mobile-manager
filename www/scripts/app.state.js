@@ -7,7 +7,7 @@
 angular
   .module('dawasco')
   .config(function ($stateProvider, $urlRouterProvider,
-    $ionicConfigProvider) {
+    $ionicConfigProvider, $authProvider, ENV) {
 
     //center view title always
     $ionicConfigProvider.navBar.alignTitle('center');
@@ -27,7 +27,22 @@ angular
     //enable js scrolling
     $ionicConfigProvider.scrolling.jsScrolling(true);
 
+    // configurations for ngAA
+    $authProvider.afterSigninRedirectTo = 'app.dashboard.overviews';
 
+    $authProvider.profileKey = 'party';
+
+    $authProvider.signinTemplateUrl = 'views/auth/signin.html';
+
+    $authProvider.signinUrl = '/signin';
+
+    $authProvider.tokenPrefix = 'dawasco';
+
+    $authProvider.signinUrl = [ENV.apiEndPoint.web, 'signin'].join('/');
+
+
+    //provide fallback state
+    $urlRouterProvider.otherwise('/performance');
 
     //base application state
     $stateProvider
@@ -35,13 +50,10 @@ angular
         abstract: true,
         templateUrl: 'views/layouts/app.html'
       })
-      //Authentication states
-      .state('app.login', {
-        url: '/signin',
-        templateUrl: 'views/authentication/signin.html'
-      })
+
+      //Password Recovery
       .state('app.forgot', {
-        templateUrl: 'views/authentication/forgot.html'
+        templateUrl: 'views/auth/forgot.html'
       })
 
       // Dashboard states
@@ -54,8 +66,11 @@ angular
         views: {
           'overviews': {
             templateUrl: 'views/dashboards/overviews.html',
-            controller: 'DashboardOverviewCtrl',
+            controller: 'DashboardOverviewCtrl'
           }
+        },
+        data: {
+          authenticated: true
         },
         resolve: {
           overviews: function (Summary) {
@@ -63,12 +78,15 @@ angular
           }
         }
       })
-      .state('app.dashboard.performances', {
+      .state('app.dashboard.performance', {
         url: '/performance',
         views: {
-          'performances': {
+          'performance': {
             templateUrl: 'views/dashboards/performance.html',
           }
+        },
+        data: {
+          authenticated: true
         }
       })
       .state('app.dashboard.productivity', {
@@ -77,10 +95,9 @@ angular
           'productivity': {
             templateUrl: 'views/dashboards/productivity.html'
           }
+        },
+        data: {
+          authenticated: true
         }
       });
-
-    //provide fallback state
-    $urlRouterProvider.otherwise('/signin');
-
   });

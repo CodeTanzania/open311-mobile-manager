@@ -43,10 +43,13 @@
 
   <!-- build:js scripts/vendor.js -->
   <!-- bower:js -->
-  <script src="lib/lodash/lodash.js"></script>
   <script src="lib/ionic/release/js/ionic.bundle.js"></script>
+  <script src="lib/lodash/lodash.js"></script>
   <script src="lib/echarts/dist/echarts.js"></script>
   <script src="lib/angular-echarts/dist/angular-echarts.js"></script>
+  <script src="lib/ngstorage/ngStorage.js"></script>
+  <script src="lib/angular-jwt/dist/angular-jwt.js"></script>
+  <script src="lib/ng-aa/dist/ng-aa.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -57,12 +60,13 @@
   <script src="scripts/config.js"></script>
   <script src="scripts/services/utils.js"></script>
   <script src="scripts/services/summary.js"></script>
+  <script src="scripts/controllers/app.js"></script>
   <script src="scripts/controllers/overview.js"></script>
   <!-- endbuild -->
 
 </head>
 
-<body ng-app="dawasco">
+<body ng-app="dawasco" ng-controller="AppController">
   <ion-nav-view>
   </ion-nav-view>
 </body>

@@ -3,7 +3,8 @@
 angular
   .module('dawasco', [
     'ionic',
-    'angular-echarts'
+    'angular-echarts',
+    'ngAA'
   ])
   .run(function ($ionicPlatform /*, $cordovaSplashscreen , $cordovaStatusbar*/ ) {
 

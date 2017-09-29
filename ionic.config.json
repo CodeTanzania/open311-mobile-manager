@@ -1,11 +1,9 @@
 {
   "name": "open311-mobile-manager",
-  "app_id": "",
+  "app_id": "7dc55ce9",
   "type": "ionic1",
-  "integrations":
-  {
-    "gulp":
-    {}
+  "integrations": {
+    "gulp": {}
   },
   "watchPatterns": [
     "scss/**/*",
