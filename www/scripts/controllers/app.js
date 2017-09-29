@@ -12,9 +12,20 @@ angular
   .module('dawasco')
   .controller('AppController', AppController);
 
-AppController.$inject = ['$rootScope'];
+AppController.$inject = ['$rootScope', '$ionicLoading'];
 
-function AppController($rootScope) {
+function AppController($rootScope, $ionicLoading) {
 
   var vm = this;
+
+  $rootScope.$on('signinBegin', function () {
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      hideOnStateChange: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+  });
 }

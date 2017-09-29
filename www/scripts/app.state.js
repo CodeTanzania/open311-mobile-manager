@@ -51,11 +51,6 @@ angular
         templateUrl: 'views/layouts/app.html'
       })
 
-      //Password Recovery
-      .state('app.forgot', {
-        templateUrl: 'views/auth/forgot.html'
-      })
-
       // Dashboard states
       .state('app.dashboard', {
         abstract: true,
