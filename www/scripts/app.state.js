@@ -6,104 +6,109 @@
 
 angular
   .module('dawasco')
-  .config(function ($stateProvider, $urlRouterProvider,
-    $ionicConfigProvider, $authProvider, ENV) {
+  .config(configFunc);
 
-    //center view title always
-    $ionicConfigProvider.navBar.alignTitle('center');
+configFunc.$inject = ['$stateProvider', '$urlRouterProvider',
+  '$ionicConfigProvider', '$authProvider', 'ENV'
+];
 
-    //disable previous title to be used in back button
-    $ionicConfigProvider.backButton.previousTitleText(false);
+function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
+  $authProvider, ENV) {
 
-    //remove back button text
-    $ionicConfigProvider.backButton.text('');
+  //center view title always
+  $ionicConfigProvider.navBar.alignTitle('center');
+  //disable previous title to be used in back button
+  $ionicConfigProvider.backButton.previousTitleText(false);
 
-    //position tabs on the top
-    $ionicConfigProvider.tabs.position('bottom');
+  //remove back button text
+  $ionicConfigProvider.backButton.text('');
 
-    //use standard tabs style
-    $ionicConfigProvider.tabs.style('standard');
+  //position tabs on the top
+  $ionicConfigProvider.tabs.position('bottom');
 
-    //enable js scrolling
-    $ionicConfigProvider.scrolling.jsScrolling(true);
+  //use standard tabs style
+  $ionicConfigProvider.tabs.style('standard');
 
-    // configurations for ngAA
-    $authProvider.afterSigninRedirectTo = 'app.dashboard.overviews';
+  //enable js scrolling
+  $ionicConfigProvider.scrolling.jsScrolling(true);
 
-    $authProvider.profileKey = 'party';
+  // configurations for ngAA
+  $authProvider.afterSigninRedirectTo = 'app.dashboard.overviews';
 
-    $authProvider.signinTemplateUrl = 'views/auth/signin.html';
+  $authProvider.profileKey = 'party';
 
-    $authProvider.signinUrl = '/signin';
+  $authProvider.signinTemplateUrl = 'views/auth/signin.html';
 
-    $authProvider.tokenPrefix = 'dawasco';
+  $authProvider.signinUrl = '/signin';
 
-    $authProvider.signinUrl = [ENV.apiEndPoint.web, 'signin'].join('/');
+  $authProvider.tokenPrefix = 'dawasco';
+
+  $authProvider.signinUrl = [ENV.apiEndPoint.web, 'signin'].join('/');
 
 
-    //provide fallback state
-    $urlRouterProvider.otherwise('/performance');
+  //provide fallback state
+  $urlRouterProvider.otherwise('/performance');
 
-    //base application state
-    $stateProvider
-      .state('app', {
-        abstract: true,
-        templateUrl: 'views/layouts/app.html'
-      })
+  //base application state
+  $stateProvider
+    .state('app', {
+      abstract: true,
+      templateUrl: 'views/layouts/app.html'
+    })
 
-      // Dashboard states
-      .state('app.dashboard', {
-        abstract: true,
-        templateUrl: 'views/layouts/tabs.html'
-      })
-      .state('app.dashboard.overviews', {
-        url: '/overviews',
-        views: {
-          'overviews': {
-            templateUrl: 'views/dashboards/overviews.html',
-            controller: 'DashboardOverviewCtrl'
-          }
-        },
-        data: {
-          authenticated: true
-        },
-        resolve: {
-          overviews: function (Summary) {
-            return Summary.overviews();
-          }
+    // Dashboard states
+    .state('app.dashboard', {
+      abstract: true,
+      templateUrl: 'views/layouts/tabs.html'
+    })
+    .state('app.dashboard.overviews', {
+      url: '/overviews',
+      views: {
+        'overviews': {
+          templateUrl: 'views/dashboards/overviews.html',
+          controller: 'DashboardOverviewCtrl'
         }
-      })
-      .state('app.dashboard.performance', {
-        url: '/performance',
-        views: {
-          'performance': {
-            templateUrl: 'views/dashboards/performance.html'
-          }
-        },
-        data: {
-          authenticated: true
+      },
+      data: {
+        authenticated: true
+      },
+      resolve: {
+        overviews: function (Summary) {
+          return Summary.overviews();
         }
-      })
-      .state('app.dashboard.standing', {
-        url: '/standing',
-        views: {
-          'standing': {
-            templateUrl: 'views/dashboards/standing.html'
-          }
-        },
-        data: {
-          authenticated: true
+      }
+    })
+    .state('app.dashboard.performance', {
+      url: '/performance',
+      views: {
+        'performance': {
+          templateUrl: 'views/dashboards/performance.html'
         }
-      })
-      .state('app.dashboard.productivity', {
-        url: '/productivity',
-        views: {
-          'productivity': {
-            templateUrl: 'views/dashboards/productivity.html'
-          }
-        },
-        data: {
-          authenticated: true
+      },
+      data: {
+        authenticated: true
+      }
+    })
+    .state('app.dashboard.standing', {
+      url: '/standing',
+      views: {
+        'standing': {
+          templateUrl: 'views/dashboards/standing.html'
         }
-      });
-  });
+      },
+      data: {
+        authenticated: true
+      }
+    })
+    .state('app.dashboard.productivity', {
+      url: '/productivity',
+      views: {
+        'productivity': {
+          templateUrl: 'views/dashboards/productivity.html'
+        }
+      },
+      data: {
+        authenticated: true
+      }
+    });
+}
