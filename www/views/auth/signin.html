@@ -1,0 +1,20 @@
+<ion-view scroll='true' title="Signin">
+  <ion-content class="login" padding="true">
+    <ion-list class="list-item-no-border">
+      <ion-item class="text-center">
+        <img class="logo" src="img/dawasco.png">
+      </ion-item>
+      <ion-item class="item-input item-floating-label input">
+        <span class="input-label">Email</span>
+        <input type="email" placeholder="Email" ng-model="user.email">
+      </ion-item>
+      <ion-item class="item-input item-floating-label input">
+        <span class="input-label">Password</span>
+        <input type="password" placeholder="Password" ng-model="user.password">
+      </ion-item>
+      <button class="button button-dawasco-positive button-block" class="button button-block button-signin" ng-click="signin()">
+              Signin
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-view>
