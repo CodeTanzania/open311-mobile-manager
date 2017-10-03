@@ -93,11 +93,17 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
       url: '/standing',
       views: {
         'standing': {
-          templateUrl: 'views/dashboards/standing.html'
+          templateUrl: 'views/dashboards/standing.html',
+          controller: 'DashboardStandingCtrl'
         }
       },
       data: {
         authenticated: true
+      },
+      resolve: {
+        'standings': function (Summary) {
+          return Summary.standings();
+        }
       }
     })
     .state('app.dashboard.productivity', {

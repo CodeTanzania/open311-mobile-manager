@@ -453,3 +453,7 @@ input.input-bordered:focus {
   border-color: transparent;
   color: rgba(31, 152, 233, 0.47);
 }
+
+.bar .button.button-dawasco.button-icon:before {
+  font-size: 25px;
+}
