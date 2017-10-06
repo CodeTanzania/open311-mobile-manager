@@ -73,11 +73,14 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
         authenticated: true
       },
       resolve: {
-        // overviews: function (Summary) {
-        //   return Summary.overviews();
-        // },
         endpoints: function (Summary) {
-          return Summary.endpoints();
+          return Summary.endpoints({
+            query: {
+              deletedAt: {
+                $eq: null
+              }
+            }
+          });
         }
       }
     })
@@ -105,7 +108,13 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
       },
       resolve: {
         endpoints: function (Summary) {
-          return Summary.endpoints();
+          return Summary.endpoints({
+            query: {
+              deletedAt: {
+                $eq: null
+              }
+            }
+          });
         }
       }
     })

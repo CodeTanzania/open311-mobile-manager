@@ -28,6 +28,7 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
     endedAt: moment().utc().endOf('date').toDate(),
     statuses: [],
     priorities: [],
+    services: [],
     servicegroups: [],
     jurisdictions: [],
     workspaces: []
@@ -78,7 +79,7 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
     if (reset) {
       $scope.filters = defaultFilters;
     }
-
+    console.log($scope.filters);
     //prepare query
     $scope.params = Summary.prepareQuery($scope.filters);
 
@@ -86,7 +87,7 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
     $scope.reload();
 
     //close current modal
-    $scope.modal.close();
+    $scope.closeModal();
   };
 
 
@@ -727,13 +728,6 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
         $scope.prepare();
       });
   };
-
-
-  //listen for events and reload overview accordingly
-  $rootScope.$on('app:servicerequests:reload', function () {
-    $scope.reload();
-  });
-
 
   //listen to refresh event and update content accordingly
   $scope.refresh = function () {

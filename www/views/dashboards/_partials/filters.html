@@ -22,7 +22,7 @@
       </ion-item>
       <ion-list class="list-item-no-border">
         <ion-item ng-repeat="jurisdiction in jurisdictions">
-          <ion-checkbox checkbox-model="filters.jurisdictions" checklist-value="jurisdiction._id">{{jurisdiction.name}}</ion-checkbox>
+          <ion-checkbox checklist-model="filters.jurisdictions" checklist-value="jurisdiction._id">{{jurisdiction.name}}</ion-checkbox>
         </ion-item>
       </ion-list>
       <ion-item class="item-divider">
@@ -30,7 +30,7 @@
       </ion-item>
       <ion-list class="list-item-no-border">
         <ion-item ng-repeat="servicegroup in servicegroups">
-          <ion-checkbox checkbox-model="filters.servicegroups" checklist-value="servicegroup._id">{{servicegroup.name}}</ion-checkbox>
+          <ion-checkbox checklist-model="filters.servicegroups" checklist-value="servicegroup._id">{{servicegroup.name}}</ion-checkbox>
         </ion-item>
       </ion-list>
       <ion-item class="item-divider">
@@ -58,8 +58,8 @@
         </ion-item>
       </ion-list>
       <div class="button-dawasco-bar">
-        <a class="button button-dawasco-positive">Filter</a>
-        <a class="button button-outline button-stable">Clear</a>
+        <button class="button button-dawasco-positive" ng-click="filter()">Filter</button>
+        <button class="button button-outline button-stable" ng-click="filter(true)">Clear</button>
       </div>
     </ion-list>
   </ion-content>

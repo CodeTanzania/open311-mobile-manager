@@ -31,6 +31,7 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
     startedAt: moment().utc().startOf('date').toDate(),
     endedAt: moment().utc().endOf('date').toDate(),
     statuses: [],
+    services: [],
     priorities: [],
     servicegroups: [],
     jurisdictions: [],
@@ -54,7 +55,6 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
       $scope.modal = modal;
     });
   }
-
 
 
   // Open filters modal Window
@@ -86,7 +86,7 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
     $scope.reload();
 
     //close current modal
-    $scope.modal.close();
+    $scope.closeModal();
   };
 
 
@@ -612,17 +612,6 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
 
   };
 
-  //listen for events and reload overview accordingly
-  $rootScope.$on('app:servicerequests:reload', function () {
-    $scope.reload();
-  });
-
-
-  //pre-load reports
-  //prepare overview details
-  $scope.params = Summary.prepareQuery($scope.filters);
-  $scope.reload();
-
 
   //listen for refresh event and reload overview accordingly
   $scope.refresh = function () {
@@ -641,6 +630,10 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
     })
   };
 
-  init();
+  //pre-load reports
+  //prepare overview details
+  $scope.params = Summary.prepareQuery($scope.filters);
+  $scope.reload();
 
+  init();
 }
