@@ -12,9 +12,11 @@ angular
   .module('dawasco')
   .controller('DashboardStandingCtrl', DashboardStandingCtrl);
 
-DashboardStandingCtrl.$inject = ['$rootScope', '$scope', '$state', '$ionicModal', 'Summary', 'endpoints'];
+DashboardStandingCtrl.$inject = ['$rootScope', '$scope', '$state', '$ionicModal', '$ionicLoading',
+  'Summary', 'endpoints'
+];
 
-function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary, endpoints) {
+function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLoading, Summary, endpoints) {
 
   $scope.priorities = endpoints.priorities.priorities;
   $scope.statuses = endpoints.statuses.statuses;
@@ -79,7 +81,6 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
     if (reset) {
       $scope.filters = defaultFilters;
     }
-    console.log($scope.filters);
     //prepare query
     $scope.params = Summary.prepareQuery($scope.filters);
 
@@ -742,6 +743,20 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
       });
   }
 
+  $scope.$on('$stateChangeStart', function () {
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      hideOnStateChange: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+  });
+
+  $scope.$on('$stateChangeSuccess', function () {
+    $ionicLoading.hide();
+  });
 
   //pre-load reports
   //prepare overview details

@@ -1,5 +1,6 @@
 <ion-modal-view>
   <ion-header-bar>
+    <button class="button button-dawasco button-dawasco-positive" ng-click="filter()">Filter</button>
     <h1 class="title">{{modalTitle}}</h1>
     <button class="button button-dawasco button-icon ion-ios-close-empty" ng-click="closeModal()"></button>
   </ion-header-bar>
@@ -57,10 +58,6 @@
           <ion-checkbox checklist-model="filters.priorities" checklist-value="priority._id">{{priority.name}}</ion-checkbox>
         </ion-item>
       </ion-list>
-      <div class="button-dawasco-bar">
-        <button class="button button-dawasco-positive" ng-click="filter()">Filter</button>
-        <button class="button button-outline button-stable" ng-click="filter(true)">Clear</button>
-      </div>
     </ion-list>
   </ion-content>
 </ion-modal-view>
