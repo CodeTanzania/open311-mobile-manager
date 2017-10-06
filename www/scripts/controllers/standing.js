@@ -743,21 +743,6 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
       });
   }
 
-  $scope.$on('$stateChangeStart', function () {
-    $ionicLoading.show({
-      content: 'Loading',
-      animation: 'fade-in',
-      showBackdrop: true,
-      hideOnStateChange: true,
-      maxWidth: 200,
-      showDelay: 0
-    });
-  });
-
-  $scope.$on('$stateChangeSuccess', function () {
-    $ionicLoading.hide();
-  });
-
   //pre-load reports
   //prepare overview details
   $scope.params = Summary.prepareQuery($scope.filters);
