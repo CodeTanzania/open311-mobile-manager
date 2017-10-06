@@ -440,12 +440,21 @@ input.input-bordered:focus {
   background-color: rgba(42, 155, 230, 0.94);
 }
 
+.button-dawasco-bar {
+  text-align: center
+}
+
+.button-dawasco-bar a {
+  width: 35%;
+}
+
 .button-dawasco-clear {
   background-color: transparent;
-  border-color: transparent;
+  border-color: #0B90E9;
   background: none;
   box-shadow: none;
   color: #0B90E9;
+  font-size: 13px;
 }
 
 .button-dawasco-clear.activated {

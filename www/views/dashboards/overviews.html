@@ -1,7 +1,7 @@
 <ion-view view-title="Overview">
   <ion-nav-buttons side="right">
-    <button class="button button-dawasco button-icon ion-android-funnel" ng-click="">
-        </button>
+    <button class="button button-dawasco button-icon ion-android-funnel" ng-click="openModal()">
+    </button>
   </ion-nav-buttons>
   <ion-content has-subheader="false">
     <ion-refresher on-refresh="refresh()" pulling-icon="ion-ios-arrow-thin-up">
@@ -16,7 +16,8 @@
           </p>
         </div>
         <div class="col">
-          <h1>{{issues.averageCallDuration.minutes}}<span class="note">mins</span> {{issues.averageCallDuration.seconds}}
+          <h1>{{issues.averageCallDuration.minutes}}
+            <span class="note">mins</span> {{issues.averageCallDuration.seconds}}
             <span class="note">secs</span>
             <h1>
               <p>
@@ -42,22 +43,38 @@
       </div>
     </ion-item>
     <!-- end issue summary -->
-    <!-- start issue count per jurisdiction -->
+    <!-- start service group count summary  -->
     <ion-list>
       <ion-item class="item">
         <h2>
-          Issue per Area
+          Issue per Service Group
         </h2>
         <p>
-          Count of Reported Issues by Their Area
+          Count of Reported Issues by Their
+          <br> Service Group
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <pie-chart config="jurisdictionConfig" data="jurisdictionData"></pie-chart>
+        <echart config="perGroupConfig" options="perGroupOptions"></echart>
       </ion-item>
     </ion-list>
-    <!-- end issue count per jurisdiction -->
-    <!-- start issue count per status -->
+    <!-- end service group count summary -->
+    <!-- start per service summary -->
+    <ion-list>
+      <ion-item class="item">
+        <h2>
+          Issue per Service
+        </h2>
+        <p>
+          Count of Reported Issues by Their Service
+        </p>
+      </ion-item>
+      <ion-item class="item-no-border-bottom">
+        <echart ng-repeat="options in perPerServiceOptions" config="perPerServiceConfig" options="options"></echart>
+      </ion-item>
+    </ion-list>
+    <!--  end per jurisdiction per service count standing -->
+    <!--start status count summary -->
     <ion-list>
       <ion-item class="item">
         <h2>
@@ -68,24 +85,24 @@
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <pie-chart config="statusConfig" data="statusData"></pie-chart>
+        <echart config="perStatusConfig" options="perStatusOptions"></echart>
       </ion-item>
     </ion-list>
-    <!-- end issue count per status -->
-    <!-- start issue count per priority -->
+    <!-- end status count summary -->
+    <!--start priority count summary -->
     <ion-list>
       <ion-item class="item">
         <h2>
           Issue per Priority
         </h2>
         <p>
-          Count of Reported Issues by Their Priority
+          Count of Reported Issues by Their Priorities
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <pie-chart config="priorityConfig" data="priorityData"></pie-chart>
+        <echart config="perPriorityConfig" options="perPriorityOptions"></echart>
       </ion-item>
     </ion-list>
-    <!-- end issue count per priority -->
+    <!-- end priority count summary -->
   </ion-content>
 </ion-view>

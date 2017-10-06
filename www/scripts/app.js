@@ -4,7 +4,9 @@ angular
   .module('dawasco', [
     'ionic',
     'angular-echarts',
-    'ngAA'
+    'ngAA',
+    'pickadate',
+    'checklist-model'
   ])
   .run(runFunc);
 

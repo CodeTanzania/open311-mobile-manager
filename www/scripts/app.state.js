@@ -73,8 +73,11 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
         authenticated: true
       },
       resolve: {
-        overviews: function (Summary) {
-          return Summary.overviews();
+        // overviews: function (Summary) {
+        //   return Summary.overviews();
+        // },
+        endpoints: function (Summary) {
+          return Summary.endpoints();
         }
       }
     })
@@ -101,8 +104,8 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
         authenticated: true
       },
       resolve: {
-        'standings': function (Summary) {
-          return Summary.standings();
+        endpoints: function (Summary) {
+          return Summary.endpoints();
         }
       }
     })
