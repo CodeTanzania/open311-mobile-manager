@@ -201,16 +201,16 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
         trigger: 'item',
         formatter: '{b} : {c}'
       },
-      toolbox: {
-        show: true,
-        feature: {
-          saveAsImage: {
-            name: 'Issue per Area-' + new Date().getTime(),
-            title: 'Save',
-            show: true
-          }
-        }
-      },
+      // toolbox: {
+      //   show: true,
+      //   feature: {
+      //     saveAsImage: {
+      //       name: 'Issue per Area-' + new Date().getTime(),
+      //       title: 'Save',
+      //       show: true
+      //     }
+      //   }
+      // },
       calculable: true,
       xAxis: [{
         type: 'category',
@@ -341,16 +341,16 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
         y: 'top',
         data: legends
       },
-      toolbox: {
-        show: true,
-        feature: {
-          saveAsImage: {
-            name: 'Issue per Area Per Service Group-' + new Date().getTime(),
-            title: 'Save',
-            show: true
-          }
-        }
-      },
+      // toolbox: {
+      //   show: true,
+      //   feature: {
+      //     saveAsImage: {
+      //       name: 'Issue per Area Per Service Group-' + new Date().getTime(),
+      //       title: 'Save',
+      //       show: true
+      //     }
+      //   }
+      // },
       calculable: true,
       xAxis: [{
         type: 'category',
@@ -466,16 +466,16 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
           y: 'top',
           data: legends
         },
-        toolbox: {
-          show: true,
-          feature: {
-            saveAsImage: {
-              name: 'Issue per Area Per Service-' + new Date().getTime(),
-              title: 'Save',
-              show: true
-            }
-          }
-        },
+        // toolbox: {
+        //   show: true,
+        //   feature: {
+        //     saveAsImage: {
+        //       name: 'Issue per Area Per Service-' + new Date().getTime(),
+        //       title: 'Save',
+        //       show: true
+        //     }
+        //   }
+        // },
         calculable: true,
         xAxis: [{
           type: 'category',
@@ -579,16 +579,16 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
         y: 'top',
         data: legends
       },
-      toolbox: {
-        show: true,
-        feature: {
-          saveAsImage: {
-            name: 'Issue per Area Per Status-' + new Date().getTime(),
-            title: 'Save',
-            show: true
-          }
-        }
-      },
+      // toolbox: {
+      //   show: true,
+      //   feature: {
+      //     saveAsImage: {
+      //       name: 'Issue per Area Per Status-' + new Date().getTime(),
+      //       title: 'Save',
+      //       show: true
+      //     }
+      //   }
+      // },
       calculable: true,
       xAxis: [{
         type: 'category',
@@ -690,16 +690,16 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, Summary,
         y: 'top',
         data: legends
       },
-      toolbox: {
-        show: true,
-        feature: {
-          saveAsImage: {
-            name: 'Issue per Area Per Priority-' + new Date().getTime(),
-            title: 'Save',
-            show: true
-          }
-        }
-      },
+      // toolbox: {
+      //   show: true,
+      //   feature: {
+      //     saveAsImage: {
+      //       name: 'Issue per Area Per Priority-' + new Date().getTime(),
+      //       title: 'Save',
+      //       show: true
+      //     }
+      //   }
+      // },
       calculable: true,
       xAxis: [{
         type: 'category',

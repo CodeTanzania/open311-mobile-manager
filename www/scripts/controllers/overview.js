@@ -11,9 +11,9 @@ angular
   .module('dawasco')
   .controller('DashboardOverviewCtrl', DashboardOverviewCtrl);
 
-DashboardOverviewCtrl.$inject = ['$rootScope', '$scope', '$state', 'Summary', 'endpoints'];
+DashboardOverviewCtrl.$inject = ['$rootScope', '$scope', '$state', '$ionicModal', 'Summary', 'endpoints'];
 
-function DashboardOverviewCtrl($rootScope, $scope, $state, Summary, endpoints) {
+function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary, endpoints) {
 
   //initialize scope attributes
   $scope.maxDate = new Date();
@@ -41,6 +41,33 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, Summary, endpoints) {
 
   // initialize overviews
   $scope.overviews = [];
+
+
+  function init() {
+
+    $scope.modalTitle = 'Overview Reports - Filters';
+
+    $ionicModal.fromTemplateUrl('views/dashboards/_partials/filters.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
+  }
+
+
+
+  // Open filters modal Window
+  $scope.openModal = function () {
+    $scope.modal.show();
+  }
+
+
+
+  // Close Filter modal window
+  $scope.closeModal = function () {
+    $scope.modal.hide();
+  }
 
 
   /**
@@ -613,5 +640,7 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, Summary, endpoints) {
       $scope.$broadcast('scroll.refreshComplete');
     })
   };
+
+  init();
 
 }
