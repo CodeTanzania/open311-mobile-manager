@@ -186,14 +186,14 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
       });
 
       // add bottom margin for top charts
-      var chartOption = (index === (chunksSize - 1)) ? {} : {
+      var chartOptions = (index === (chunksSize - 1)) ? {} : {
         grid: {
           bottom: '30%'
         }
       }
 
       // prepare charts options
-      $scope.perGroupOptions.push(_.merge(chartOption, {
+      $scope.perGroupOptions.push(_.merge(chartOptions, {
         color: _.map(data, 'itemStyle.normal.color'),
         textStyle: {
           fontFamily: 'Lato'
@@ -365,29 +365,41 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
    */
   $scope.prepareIssuePerPriority = function () {
 
+    //prepare chart config
+    $scope.perPriorityConfig = {
+      height: 400,
+      forceClear: true
+    };
+
+    // prepare chart options
+    $scope.perPriorityOptions = [];
+
     //prepare unique priority for bar chart categories
     var categories = _.chain($scope.overviews)
       .map('priority')
       .uniqBy('name')
       .value();
 
+    // split charts for better visibility
+    var chunks = _.chunk(categories, 3);
+    var chunksSize = _.size(chunks);
 
-    //prepare bar chart series data
-    var data =
-      _.map(categories, function (category) {
+    _.forEach(chunks, function (priorities, index) {
 
-        //obtain all overviews of specified priority(category)
-        var value =
-          _.filter($scope.overviews, function (overview) {
-            return overview.priority.name === category.name;
-          });
+      var data = _.map(priorities, function (priority) {
+
+        var value = _.filter($scope.overviews, function (overview) {
+          return overview.priority.name === priority.name;
+        });
+
         value = value ? _.sumBy(value, 'count') : 0;
+
         var serie = {
-          name: category.name,
+          name: priority.name,
           value: value,
           itemStyle: {
             normal: {
-              color: category.color
+              color: priority.color
             }
           }
         };
@@ -396,73 +408,66 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
 
       });
 
-    //prepare chart config
-    $scope.perPriorityConfig = {
-      height: 400,
-      forceClear: true
-    };
 
-    //prepare chart options
-    $scope.perPriorityOptions = {
-      color: _.map(data, 'itemStyle.normal.color'),
-      textStyle: {
-        fontFamily: 'Lato'
-      },
-      tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c}'
-      },
-      // toolbox: {
-      //   show: true,
-      //   feature: {
-      //     saveAsImage: {
-      //       name: 'Issue per Priority-' + new Date().getTime(),
-      //       title: 'Save',
-      //       show: true
-      //     }
-      //   }
-      // },
-      calculable: true,
-      xAxis: [{
-        type: 'category',
-        data: _.map(data, 'name'),
-        axisTick: {
-          alignWithLabel: true
+      // add bottom margin for top charts
+      var chartOptions = (index === (chunksSize - 1)) ? {} : {
+        grid: {
+          bottom: '30%'
         }
-      }],
-      yAxis: [{
-        type: 'value'
-      }],
-      series: [{
-        type: 'bar',
-        barWidth: '70%',
-        label: {
-          normal: {
-            show: true
-          }
-        },
-        markPoint: { // show area with maximum and minimum
-          data: [{
-              name: 'Maximum',
-              type: 'max'
-            },
-            {
-              name: 'Minimum',
-              type: 'min'
-            }
-          ]
-        },
-        markLine: { //add average line
-          precision: 0,
-          data: [{
-            type: 'average',
-            name: 'Average'
-          }]
-        },
-        data: data
-      }]
-    };
+      }
 
+      // prepare charts options
+      $scope.perPriorityOptions.push(_.merge(chartOptions, {
+        color: _.map(data, 'itemStyle.normal.color'),
+        textStyle: {
+          fontFamily: 'Lato'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b} : {c}'
+        },
+        calculable: true,
+        xAxis: [{
+          type: 'category',
+          data: _.map(data, 'name'),
+          axisTick: {
+            alignWithLabel: true
+          }
+        }],
+        yAxis: [{
+          type: 'value'
+        }],
+        series: [{
+          type: 'bar',
+          barWidth: '70%',
+          label: {
+            normal: {
+              show: true
+            }
+          },
+          markPoint: { // show area with maximum and minimum
+            data: [{
+                name: 'Maximum',
+                type: 'max'
+              },
+              {
+                name: 'Minimum',
+                type: 'min'
+              }
+            ]
+          },
+          markLine: { //add average line
+            precision: 0,
+            data: [{
+              type: 'average',
+              name: 'Average'
+            }]
+          },
+          data: data
+        }]
+      }));
+
+    });
   };
 
 

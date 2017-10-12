@@ -103,7 +103,7 @@
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <echart config="perPriorityConfig" options="perPriorityOptions"></echart>
+        <echart ng-repeat="options in perPriorityOptions" config="perPriorityConfig" options="options"></echart>
       </ion-item>
     </ion-list>
     <!-- end priority count summary -->
