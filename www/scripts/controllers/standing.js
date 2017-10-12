@@ -304,42 +304,9 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
     //prepare unique group name for bar chart legends label
     var legends = _.map(groups, 'name');
 
-    //prepare bar chart series
-    var series = {};
-    _.forEach(categories, function (category) {
-      _.forEach(groups, function (group) {
-        var serie = series[group.name] || {
-          name: group.name,
-          type: 'bar',
-          label: {
-            normal: {
-              show: true,
-              position: 'top'
-            }
-          },
-          data: []
-        };
-
-        //obtain all standings of specified jurisdiction(category)
-        //and group
-        var value =
-          _.filter($scope.standings, function (standing) {
-            return (standing.jurisdiction.name === category &&
-              standing.group.name === group.name);
-          });
-        value = value ? _.sumBy(value, 'count') : 0;
-        serie.data.push({
-          value: value,
-          itemStyle: {
-            normal: {
-              color: group.color
-            }
-          }
-        });
-        series[group.name] = serie;
-      });
-    });
-    series = _.values(series);
+    // create chunks for splitting charts for better visibility
+    var chunks = _.chunk(categories, 1);
+    var chunksSize = _.size(chunks);
 
     //prepare chart config
     $scope.perJurisdictionPerServiceGroupConfig = {
@@ -347,42 +314,93 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
       forceClear: true
     };
 
-    //prepare chart options
-    $scope.perJurisdictionPerServiceGroupOptions = {
-      color: colors,
-      textStyle: {
-        fontFamily: 'Lato'
-      },
-      tooltip: {
-        trigger: 'item',
-        // formatter: '{b} : {c}'
-      },
-      legend: {
-        orient: 'horizontal',
-        x: 'center',
-        y: 'top',
-        data: legends
-      },
-      // toolbox: {
-      //   show: true,
-      //   feature: {
-      //     saveAsImage: {
-      //       name: 'Issue per Area Per Service Group-' + new Date().getTime(),
-      //       title: 'Save',
-      //       show: true
-      //     }
-      //   }
-      // },
-      calculable: true,
-      xAxis: [{
-        type: 'category',
-        data: categories
-      }],
-      yAxis: [{
-        type: 'value'
-      }],
-      series: series
-    };
+    // prepare charts options
+    $scope.perJurisdictionPerServiceGroupOptions = [];
+
+    //prepare bar chart series
+
+
+    _.forEach(chunks, function (jurisdictions, index) {
+
+      var series = {};
+
+      _.forEach(jurisdictions, function (jurisdiction) {
+        _.forEach(groups, function (group) {
+          var serie = series[group.name] || {
+            name: group.name,
+            type: 'bar',
+            label: {
+              normal: {
+                show: true,
+                position: 'top'
+              }
+            },
+            data: []
+          };
+
+          //obtain all standings of specified jurisdiction(category) and group
+          var value = _.filter($scope.standings, function (standing) {
+            return (standing.jurisdiction.name === jurisdiction &&
+              standing.group.name === group.name);
+          });
+
+          value = value ? _.sumBy(value, 'count') : 0;
+
+          serie.data.push({
+            value: value,
+            itemStyle: {
+              normal: {
+                color: group.color
+              }
+            }
+          });
+
+
+          series[group.name] = serie;
+        });
+      });
+
+      series = _.values(series);
+
+      var chartOptions = buildChartOptions(index, chunksSize);
+
+      $scope.perJurisdictionPerServiceGroupOptions.push(_.merge(chartOptions, {
+        color: colors,
+        textStyle: {
+          fontFamily: 'Lato'
+        },
+        tooltip: {
+          trigger: 'item',
+          // formatter: '{b} : {c}'
+        },
+        legend: {
+          orient: 'horizontal',
+          x: 'center',
+          y: 'top',
+          data: legends
+        },
+        // toolbox: {
+        //   show: true,
+        //   feature: {
+        //     saveAsImage: {
+        //       name: 'Issue per Area Per Service Group-' + new Date().getTime(),
+        //       title: 'Save',
+        //       show: true
+        //     }
+        //   }
+        // },
+        calculable: true,
+        xAxis: [{
+          type: 'category',
+          data: jurisdictions
+        }],
+        yAxis: [{
+          type: 'value'
+        }],
+        series: series
+      }));
+
+    });
 
   };
 

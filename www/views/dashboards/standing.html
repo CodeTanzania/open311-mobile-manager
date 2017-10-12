@@ -37,7 +37,7 @@
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <echart config="perJurisdictionPerServiceGroupConfig" options="perJurisdictionPerServiceGroupOptions"></echart>
+        <echart ng-repeat="options in perJurisdictionPerServiceGroupOptions" config="perJurisdictionPerServiceGroupConfig" options="options"></echart>
       </ion-item>
     </ion-list>
     <!-- end per jurisdiction per service group count standing -->
