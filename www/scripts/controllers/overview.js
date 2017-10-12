@@ -56,6 +56,18 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
     });
   }
 
+  // build chart option which add bottom margin
+  function buildChartOptions(index, chunksSize) {
+
+    var chartOptions = (index === (chunksSize - 1)) ? {} : {
+      grid: {
+        bottom: '30%'
+      }
+    };
+
+    return chartOptions;
+  }
+
 
   // Open filters modal Window
   $scope.openModal = function () {
@@ -186,11 +198,7 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
       });
 
       // add bottom margin for top charts
-      var chartOptions = (index === (chunksSize - 1)) ? {} : {
-        grid: {
-          bottom: '30%'
-        }
-      }
+      var chartOptions = buildChartOptions(index, chunksSize);
 
       // prepare charts options
       $scope.perGroupOptions.push(_.merge(chartOptions, {
@@ -262,96 +270,104 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
       .uniqBy('name')
       .value();
 
-    //prepare bar chart series data
-    var data =
-      _.map(categories, function (category) {
-
-        //obtain all overviews of specified status(category)
-        var value =
-          _.filter($scope.overviews, function (overview) {
-            return overview.status.name === category.name;
-          });
-        value = value ? _.sumBy(value, 'count') : 0;
-        var serie = {
-          name: category.name,
-          value: value,
-          itemStyle: {
-            normal: {
-              color: category.color
-            }
-          }
-        };
-
-        return serie;
-
-      });
-
     //prepare chart config
     $scope.perStatusConfig = {
       height: 400,
       forceClear: true
     };
 
-    //prepare chart options
-    $scope.perStatusOptions = {
-      color: _.map(data, 'itemStyle.normal.color'),
-      textStyle: {
-        fontFamily: 'Lato'
-      },
-      tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c}'
-      },
-      // toolbox: {
-      //   show: true,
-      //   feature: {
-      //     saveAsImage: {
-      //       name: 'Issue per Status-' + new Date().getTime(),
-      //       title: 'Save',
-      //       show: true
-      //     }
-      //   }
-      // },
-      calculable: true,
-      xAxis: [{
-        type: 'category',
-        data: _.map(data, 'name'),
-        axisTick: {
-          alignWithLabel: true
-        }
-      }],
-      yAxis: [{
-        type: 'value'
-      }],
-      series: [{
-        type: 'bar',
-        barWidth: '70%',
-        label: {
-          normal: {
-            show: true
-          }
-        },
-        markPoint: { // show area with maximum and minimum
-          data: [{
-              name: 'Maximum',
-              type: 'max'
-            },
-            {
-              name: 'Minimum',
-              type: 'min'
+    // prepare charts options
+    $scope.perStatusOptions = [];
+
+    var chunks = _.chunk(categories, 3);
+    var chunksSize = _.size(chunks);
+
+    _.forEach(chunks, function (statuses, index) {
+
+      var data = _.map(statuses, function (status) {
+
+        var value = _.filter($scope.overviews, function (overview) {
+          return overview.status.name === status.name;
+        })
+
+        value = value ? _.sumBy(value, 'count') : 0;
+
+        var serie = {
+          name: status.name,
+          value: value,
+          itemStyle: {
+            normal: {
+              color: status.color
             }
-          ]
+          }
+        };
+
+        return serie;
+      });
+
+      var chartOptions = buildChartOptions(index, chunksSize);
+
+      $scope.perStatusOptions.push(_.merge(chartOptions, {
+        color: _.map(data, 'itemStyle.normal.color'),
+        textStyle: {
+          fontFamily: 'Lato'
         },
-        markLine: { //add average line
-          precision: 0,
-          data: [{
-            type: 'average',
-            name: 'Average'
-          }]
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b} : {c}'
         },
-        data: data
-      }]
-    };
+        // toolbox: {
+        //   show: true,
+        //   feature: {
+        //     saveAsImage: {
+        //       name: 'Issue per Status-' + new Date().getTime(),
+        //       title: 'Save',
+        //       show: true
+        //     }
+        //   }
+        // },
+        calculable: true,
+        xAxis: [{
+          type: 'category',
+          data: _.map(data, 'name'),
+          axisTick: {
+            alignWithLabel: true
+          }
+        }],
+        yAxis: [{
+          type: 'value'
+        }],
+        series: [{
+          type: 'bar',
+          barWidth: '70%',
+          label: {
+            normal: {
+              show: true
+            }
+          },
+          markPoint: { // show area with maximum and minimum
+            data: [{
+                name: 'Maximum',
+                type: 'max'
+              },
+              {
+                name: 'Minimum',
+                type: 'min'
+              }
+            ]
+          },
+          markLine: { //add average line
+            precision: 0,
+            data: [{
+              type: 'average',
+              name: 'Average'
+            }]
+          },
+          data: data
+        }]
+      }));
+
+    });
 
   };
 
@@ -410,11 +426,7 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
 
 
       // add bottom margin for top charts
-      var chartOptions = (index === (chunksSize - 1)) ? {} : {
-        grid: {
-          bottom: '30%'
-        }
-      }
+      var chartOptions = buildChartOptions(index, chunksSize);
 
       // prepare charts options
       $scope.perPriorityOptions.push(_.merge(chartOptions, {
@@ -527,14 +539,10 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
         });
 
       //ensure bottom margin for top charts
-      var chart = (index === (chunksSize - 1)) ? {} : {
-        grid: {
-          bottom: '30%'
-        }
-      };
+      var chartOptions = buildChartOptions(index, chunksSize);
 
       //prepare chart options
-      $scope.perPerServiceOptions.push(_.merge(chart, {
+      $scope.perPerServiceOptions.push(_.merge(chartOptions, {
         color: _.map(data, 'itemStyle.normal.color'),
         textStyle: {
           fontFamily: 'Lato'

@@ -88,7 +88,7 @@
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <echart config="perStatusConfig" options="perStatusOptions"></echart>
+        <echart ng-repeat="options in perStatusOptions" config="perStatusConfig" options="options"></echart>
       </ion-item>
     </ion-list>
     <!-- end status count summary -->
