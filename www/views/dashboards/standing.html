@@ -19,7 +19,7 @@
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <echart config="perJurisdictionConfig" options="perJurisdictionOptions"></echart>
+        <echart ng-repeat="options in perJurisdictionOptions" config="perJurisdictionConfig" options="options"></echart>
       </ion-item>
     </ion-list>
     <!-- end per jurisdiction count standing -->
@@ -28,10 +28,12 @@
     <ion-list>
       <ion-item class="item">
         <h2>
-          Issue per Area per Service Group - <br> Affected Business Units(Divisions)
+          Issue per Area per Service Group -
+          <br> Affected Business Units(Divisions)
         </h2>
         <p>
-          Count of Reported Issues by Their <br>Area and Service Group
+          Count of Reported Issues by Their
+          <br>Area and Service Group
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
@@ -42,9 +44,11 @@
     <!-- start per jurisdiction per service count standing -->
     <ion-list>
       <ion-item class="item">
-        <h2>Issue per Area per Service - Impacted <br> Business Services</h2>
+        <h2>Issue per Area per Service - Impacted
+          <br> Business Services</h2>
         <p>
-          Count of Reported Issues by Their Area <br> and Service
+          Count of Reported Issues by Their Area
+          <br> and Service
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
@@ -55,9 +59,11 @@
     <!-- start per jurisdiction per priority count standing -->
     <ion-list>
       <ion-item class="item">
-        <h2>Issue per Area per Priority - Work <br>Severity</h2>
+        <h2>Issue per Area per Priority - Work
+          <br>Severity</h2>
         <p>
-          Count of Reported Issues by Their Area <br> and Priority
+          Count of Reported Issues by Their Area
+          <br> and Priority
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
@@ -68,9 +74,11 @@
     <!-- start per jurisdiction per status count standing -->
     <ion-list>
       <ion-item class="item">
-        <h2>Issue per Area per Status - Work <br> Progress</h2>
+        <h2>Issue per Area per Status - Work
+          <br> Progress</h2>
         <p>
-          Count of Reported Issues by Their Area <br> and Status
+          Count of Reported Issues by Their Area
+          <br> and Status
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">

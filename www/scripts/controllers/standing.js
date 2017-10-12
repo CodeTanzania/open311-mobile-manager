@@ -57,6 +57,18 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
   }
 
 
+  // build chart option to add bottom margin
+  function buildChartOptions(index, chunksSize) {
+
+    var chartOptions = (index === (chunksSize - 1)) ? {} : {
+      grid: {
+        bottom: '30%'
+      }
+    };
+
+    return chartOptions;
+  }
+
   /**
    * Open filters modal Window
    */
@@ -155,30 +167,41 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
       .uniqBy('name')
       .value();
 
+    //prepare chart config
+    $scope.perJurisdictionConfig = {
+      height: 400,
+      forceClear: true
+    };
 
-    //prepare unique jurisdiction color for bar chart and legends color
-    var colors = _.map(categories, 'color');
+    // prepare charts options
+    $scope.perJurisdictionOptions = [];
 
-    //prepare unique jurisdiction name for bar chart legends label
-    var legends = _.map(categories, 'name');
+    var chunks = _.chunk(categories, 2);
+    var chunksSize = _.size(chunks);
 
-    //prepare bar chart series data
-    var data =
-      _.map(categories, function (category) {
+    _.forEach(chunks, function (jurisdictions, index) {
 
-        //obtain all standings of specified jurisdiction(category)
-        var value =
-          _.filter($scope.standings, function (standing) {
-            return standing.jurisdiction.name === category.name;
-          });
+      //prepare unique jurisdiction color for bar chart and legends color
+      var colors = _.map(jurisdictions, 'color');
+
+      //prepare unique jurisdiction name for bar chart legends label
+      var legends = _.map(jurisdictions, 'name');
+
+      //prepare bar chart series data
+      var data = _.map(jurisdictions, function (jurisdiction) {
+
+        var value = _.filter($scope.standings, function (standing) {
+          return standing.jurisdiction.name === jurisdiction.name;
+        });
+
         value = value ? _.sumBy(value, 'count') : 0;
 
         var serie = {
-          name: category.name,
+          name: jurisdiction.name,
           value: value,
           itemStyle: {
             normal: {
-              color: category.color
+              color: jurisdiction.color
             }
           }
         };
@@ -187,72 +210,69 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
 
       });
 
-    //prepare chart config
-    $scope.perJurisdictionConfig = {
-      height: 400,
-      forceClear: true
-    };
+      var chartOptions = buildChartOptions(index, chunksSize);
 
-    //prepare chart options
-    $scope.perJurisdictionOptions = {
-      color: colors,
-      textStyle: {
-        fontFamily: 'Lato'
-      },
-      tooltip: {
-        trigger: 'item',
-        formatter: '{b} : {c}'
-      },
-      // toolbox: {
-      //   show: true,
-      //   feature: {
-      //     saveAsImage: {
-      //       name: 'Issue per Area-' + new Date().getTime(),
-      //       title: 'Save',
-      //       show: true
-      //     }
-      //   }
-      // },
-      calculable: true,
-      xAxis: [{
-        type: 'category',
-        data: _.map(categories, 'name'),
-        axisTick: {
-          alignWithLabel: true
-        }
-      }],
-      yAxis: [{
-        type: 'value'
-      }],
-      series: [{
-        type: 'bar',
-        barWidth: '70%',
-        label: {
-          normal: {
-            show: true
+      $scope.perJurisdictionOptions.push(_.merge(chartOptions, {
+        color: colors,
+        textStyle: {
+          fontFamily: 'Lato'
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b} : {c}'
+        },
+        // toolbox: {
+        //   show: true,
+        //   feature: {
+        //     saveAsImage: {
+        //       name: 'Issue per Area-' + new Date().getTime(),
+        //       title: 'Save',
+        //       show: true
+        //     }
+        //   }
+        // },
+        calculable: true,
+        xAxis: [{
+          type: 'category',
+          data: _.map(data, 'name'),
+          axisTick: {
+            alignWithLabel: true
           }
-        },
-        markPoint: { // show area with maximum and minimum
-          data: [{
-              name: 'Maximum',
-              type: 'max'
-            },
-            {
-              name: 'Minimum',
-              type: 'min'
+        }],
+        yAxis: [{
+          type: 'value'
+        }],
+        series: [{
+          type: 'bar',
+          barWidth: '70%',
+          label: {
+            normal: {
+              show: true
             }
-          ]
-        },
-        markLine: { //add average line
-          precision: 0,
-          data: [{
-            type: 'average',
-            name: 'Average'
-          }]
-        },
-        data: data
-      }]
-    };
+          },
+          markPoint: { // show area with maximum and minimum
+            data: [{
+                name: 'Maximum',
+                type: 'max'
+              },
+              {
+                name: 'Minimum',
+                type: 'min'
+              }
+            ]
+          },
+          markLine: { //add average line
+            precision: 0,
+            data: [{
+              type: 'average',
+              name: 'Average'
+            }]
+          },
+          data: data
+        }]
+      }));
+
+    });
 
   };
 
