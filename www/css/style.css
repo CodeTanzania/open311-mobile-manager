@@ -466,3 +466,10 @@ input.input-bordered:focus {
 .bar .button.button-dawasco.button-icon:before {
   font-size: 25px;
 }
+
+.dawasco-warning-note {
+  font-size: 12px;
+  text-align: center;
+  font-style: italic;
+  border-left: 2px solid #f5c203;
+}

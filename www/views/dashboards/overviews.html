@@ -58,6 +58,9 @@
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
+        <div class="dawasco-warning-note" ng-if="perGroupOptions.length == 0">
+          No Data Found. Please Update Your Filters.
+        </div>
         <echart ng-repeat="options in perGroupOptions" config="perGroupConfig" options="options"></echart>
       </ion-item>
     </ion-list>
@@ -73,13 +76,16 @@
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <echart ng-repeat="options in perPerServiceOptions" config="perPerServiceConfig" options="options"></echart>
+        <div class="dawasco-warning-note" ng-if="perPerServiceOptions.length == 0">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perPerServiceOptions " config="perPerServiceConfig " options="options "></echart>
       </ion-item>
     </ion-list>
     <!--  end per jurisdiction per service count standing -->
     <!--start status count summary -->
     <ion-list>
-      <ion-item class="item">
+      <ion-item class="item ">
         <h2>
           Issue per Status
         </h2>
@@ -87,14 +93,17 @@
           Count of Reported Issues by Their Status
         </p>
       </ion-item>
-      <ion-item class="item-no-border-bottom">
-        <echart ng-repeat="options in perStatusOptions" config="perStatusConfig" options="options"></echart>
+      <ion-item class="item-no-border-bottom ">
+        <div class="dawasco-warning-note " ng-if="perStatusOptions.length == 0 ">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perStatusOptions " config="perStatusConfig " options="options "></echart>
       </ion-item>
     </ion-list>
     <!-- end status count summary -->
     <!--start priority count summary -->
     <ion-list>
-      <ion-item class="item">
+      <ion-item class="item ">
         <h2>
           Issue per Priority
         </h2>
@@ -103,7 +112,10 @@
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <echart ng-repeat="options in perPriorityOptions" config="perPriorityConfig" options="options"></echart>
+        <div class="dawasco-warning-note " ng-if="perPriorityOptions.length ==0 ">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perPriorityOptions " config="perPriorityConfig " options="options "></echart>
       </ion-item>
     </ion-list>
     <!-- end priority count summary -->
