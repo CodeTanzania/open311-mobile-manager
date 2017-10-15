@@ -14,7 +14,10 @@
     "angular-sanitize": "^1.6.4",
     "angular-echarts": "^1.0.2",
     "echarts": "^3.7.1",
-    "ng-aa": "^0.3.0"
+    "ng-aa": "^0.3.0",
+    "angular-pickadate": "https://github.com/lykmapipo/angular-pickadate.git#^2.1.2",
+    "checklist-model": "^0.11.0",
+    "moment": "^2.18.1"
   },
   "resolutions": {
     "angular-ui-router": "^1.0.3",

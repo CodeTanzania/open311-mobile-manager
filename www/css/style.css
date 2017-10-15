@@ -440,12 +440,21 @@ input.input-bordered:focus {
   background-color: rgba(42, 155, 230, 0.94);
 }
 
+.button-dawasco-bar {
+  text-align: center
+}
+
+.button-dawasco-bar a {
+  width: 35%;
+}
+
 .button-dawasco-clear {
   background-color: transparent;
-  border-color: transparent;
+  border-color: #0B90E9;
   background: none;
   box-shadow: none;
   color: #0B90E9;
+  font-size: 13px;
 }
 
 .button-dawasco-clear.activated {
@@ -456,4 +465,11 @@ input.input-bordered:focus {
 
 .bar .button.button-dawasco.button-icon:before {
   font-size: 25px;
+}
+
+.dawasco-warning-note {
+  font-size: 12px;
+  text-align: center;
+  font-style: italic;
+  border-left: 2px solid #f5c203;
 }

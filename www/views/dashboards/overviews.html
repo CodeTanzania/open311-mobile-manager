@@ -1,65 +1,91 @@
-<ion-view view-title="Overview">
+<ion-view view-title="Overview - Reports">
   <ion-nav-buttons side="right">
-    <button class="button button-dawasco button-icon ion-android-funnel" ng-click="">
-        </button>
+    <button class="button button-dawasco button-icon ion-android-funnel" ng-click="openModal()">
+    </button>
   </ion-nav-buttons>
   <ion-content has-subheader="false">
     <ion-refresher on-refresh="refresh()" pulling-icon="ion-ios-arrow-thin-up">
     </ion-refresher>
     <!-- start issue summary -->
-    <ion-item class="item">
-      <div class="row">
-        <div class="col">
-          <h1>{{issues.total}}</h1>
-          <p>
-            Total Reported Issues
-          </p>
+    <ion-list>
+      <ion-item class="item">
+        <div class="row">
+          <div class="col">
+            <h1>{{issues.total}}</h1>
+            <p>
+              Total Reported Issues
+            </p>
+          </div>
+          <div class="col">
+            <h1>{{issues.averageCallDuration.minutes}}
+              <span class="note">mins</span> {{issues.averageCallDuration.seconds}}
+              <span class="note">secs</span>
+              <h1>
+                <p>
+                  Average Call Duration
+                </p>
+          </div>
         </div>
-        <div class="col">
-          <h1>{{issues.averageCallDuration.minutes}}<span class="note">mins</span> {{issues.averageCallDuration.seconds}}
-            <span class="note">secs</span>
-            <h1>
-              <p>
-                Average Call Duration
-              </p>
+      </ion-item>
+      <ion-item class="item">
+        <div class="row">
+          <div class="col">
+            <h1>{{issues.resolved}}</h1>
+            <p>
+              Resolved Issues
+            </p>
+          </div>
+          <div class="col">
+            <h1>{{issues.unresolved}}</h1>
+            <p>
+              Un Resolved Issues
+            </p>
+          </div>
         </div>
-      </div>
-    </ion-item>
-    <ion-item class="item">
-      <div class="row">
-        <div class="col">
-          <h1>{{issues.resolved}}</h1>
-          <p>
-            Resolved Issues
-          </p>
-        </div>
-        <div class="col">
-          <h1>{{issues.unresolved}}</h1>
-          <p>
-            Un Resolved Issues
-          </p>
-        </div>
-      </div>
-    </ion-item>
+      </ion-item>
+    </ion-list>
+
     <!-- end issue summary -->
-    <!-- start issue count per jurisdiction -->
+    <!-- start service group count summary  -->
     <ion-list>
       <ion-item class="item">
         <h2>
-          Issue per Area
+          Issue per Service Group
         </h2>
         <p>
-          Count of Reported Issues by Their Area
+          Count of Reported Issues by Their
+          <br> Service Group
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <pie-chart config="jurisdictionConfig" data="jurisdictionData"></pie-chart>
+        <div class="dawasco-warning-note" ng-if="perGroupOptions.length == 0">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perGroupOptions" config="perGroupConfig" options="options"></echart>
       </ion-item>
     </ion-list>
-    <!-- end issue count per jurisdiction -->
-    <!-- start issue count per status -->
+    <!-- end service group count summary -->
+    <!-- start per service summary -->
     <ion-list>
       <ion-item class="item">
+        <h2>
+          Issue per Service
+        </h2>
+        <p>
+          Count of Reported Issues by Their Service
+        </p>
+      </ion-item>
+      <ion-item class="item-no-border-bottom">
+        <div class="dawasco-warning-note" ng-if="perPerServiceOptions.length == 0">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perPerServiceOptions " config="perPerServiceConfig " options="options "></echart>
+      </ion-item>
+    </ion-list>
+    <!--  end per jurisdiction per service count standing -->
+    <!--start status count summary -->
+    <ion-list>
+      <ion-item class="item ">
         <h2>
           Issue per Status
         </h2>
@@ -67,25 +93,31 @@
           Count of Reported Issues by Their Status
         </p>
       </ion-item>
-      <ion-item class="item-no-border-bottom">
-        <pie-chart config="statusConfig" data="statusData"></pie-chart>
+      <ion-item class="item-no-border-bottom ">
+        <div class="dawasco-warning-note " ng-if="perStatusOptions.length == 0 ">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perStatusOptions " config="perStatusConfig " options="options "></echart>
       </ion-item>
     </ion-list>
-    <!-- end issue count per status -->
-    <!-- start issue count per priority -->
+    <!-- end status count summary -->
+    <!--start priority count summary -->
     <ion-list>
-      <ion-item class="item">
+      <ion-item class="item ">
         <h2>
           Issue per Priority
         </h2>
         <p>
-          Count of Reported Issues by Their Priority
+          Count of Reported Issues by Their Priorities
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <pie-chart config="priorityConfig" data="priorityData"></pie-chart>
+        <div class="dawasco-warning-note " ng-if="perPriorityOptions.length ==0 ">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perPriorityOptions " config="perPriorityConfig " options="options "></echart>
       </ion-item>
     </ion-list>
-    <!-- end issue count per priority -->
+    <!-- end priority count summary -->
   </ion-content>
 </ion-view>

@@ -1,0 +1,63 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <button class="button button-dawasco button-dawasco-positive" ng-click="filter()">Filter</button>
+    <h1 class="title">{{modalTitle}}</h1>
+    <button class="button button-dawasco button-icon ion-ios-close-empty" ng-click="closeModal()"></button>
+  </ion-header-bar>
+  <ion-content>
+    <ion-list class="list-item-no-border">
+      <ion-item class="item-divider">
+        From
+      </ion-item>
+      <ion-item>
+        <div pickadate ng-model="filters.startedAt" max-date="maxDate" class="p-a p-l-none"></div>
+      </ion-item>
+      <ion-item class="item-divider">
+        To
+      </ion-item>
+      <ion-item>
+        <div pickadate ng-model="filters.endedAt" max-date="maxDate" class="p-a p-l-none"></div>
+      </ion-item>
+      <ion-item class="item-divider">
+        Jurisdiction
+      </ion-item>
+      <ion-list class="list-item-no-border">
+        <ion-item ng-repeat="jurisdiction in jurisdictions">
+          <ion-checkbox checklist-model="filters.jurisdictions" checklist-value="jurisdiction._id">{{jurisdiction.name}}</ion-checkbox>
+        </ion-item>
+      </ion-list>
+      <ion-item class="item-divider">
+        Service Group
+      </ion-item>
+      <ion-list class="list-item-no-border">
+        <ion-item ng-repeat="servicegroup in servicegroups">
+          <ion-checkbox checklist-model="filters.servicegroups" checklist-value="servicegroup._id">{{servicegroup.name}}</ion-checkbox>
+        </ion-item>
+      </ion-list>
+      <ion-item class="item-divider">
+        Service
+      </ion-item>
+      <ion-list class="list-item-no-border">
+        <ion-item ng-repeat="service in services">
+          <ion-checkbox checklist-model="filters.services" checklist-value="service._id">{{service.name}}</ion-checkbox>
+        </ion-item>
+      </ion-list>
+      <ion-item class="item-divider">
+        Status
+      </ion-item>
+      <ion-list class="list-item-no-border">
+        <ion-item ng-repeat="status in statuses">
+          <ion-checkbox checklist-model="filters.statuses" checklist-value="status._id">{{status.name}}</ion-checkbox>
+        </ion-item>
+      </ion-list>
+      <ion-item class="item-divider">
+        Priority
+      </ion-item>
+      <ion-list class="list-item-no-border">
+        <ion-item ng-repeat="priority in priorities">
+          <ion-checkbox checklist-model="filters.priorities" checklist-value="priority._id">{{priority.name}}</ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ion-list>
+  </ion-content>
+</ion-modal-view>

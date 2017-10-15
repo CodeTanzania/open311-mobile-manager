@@ -59,7 +59,13 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
     // Dashboard states
     .state('app.dashboard', {
       abstract: true,
-      templateUrl: 'views/layouts/tabs.html'
+      templateUrl: 'views/layouts/tabs.html',
+      controller: function ($rootScope, $scope) {
+        $scope.refresh = function (event) {
+          console.log('reload', event);
+          $rootScope.$broadcast(event);
+        };
+      }
     })
     .state('app.dashboard.overviews', {
       url: '/overviews',
@@ -73,8 +79,14 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
         authenticated: true
       },
       resolve: {
-        overviews: function (Summary) {
-          return Summary.overviews();
+        endpoints: function (Summary) {
+          return Summary.endpoints({
+            query: {
+              deletedAt: {
+                $eq: null
+              }
+            }
+          });
         }
       }
     })
@@ -101,8 +113,14 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
         authenticated: true
       },
       resolve: {
-        'standings': function (Summary) {
-          return Summary.standings();
+        endpoints: function (Summary) {
+          return Summary.endpoints({
+            query: {
+              deletedAt: {
+                $eq: null
+              }
+            }
+          });
         }
       }
     })
