@@ -221,16 +221,6 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
           trigger: 'item',
           formatter: '{b} : {c}'
         },
-        // toolbox: {
-        //   show: true,
-        //   feature: {
-        //     saveAsImage: {
-        //       name: 'Issue per Area-' + new Date().getTime(),
-        //       title: 'Save',
-        //       show: true
-        //     }
-        //   }
-        // },
         calculable: true,
         xAxis: [{
           type: 'category',
@@ -379,16 +369,6 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
           y: 'top',
           data: legends
         },
-        // toolbox: {
-        //   show: true,
-        //   feature: {
-        //     saveAsImage: {
-        //       name: 'Issue per Area Per Service Group-' + new Date().getTime(),
-        //       title: 'Save',
-        //       show: true
-        //     }
-        //   }
-        // },
         calculable: true,
         xAxis: [{
           type: 'category',
@@ -506,16 +486,6 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
           y: 'top',
           data: legends
         },
-        // toolbox: {
-        //   show: true,
-        //   feature: {
-        //     saveAsImage: {
-        //       name: 'Issue per Area Per Service-' + new Date().getTime(),
-        //       title: 'Save',
-        //       show: true
-        //     }
-        //   }
-        // },
         calculable: true,
         xAxis: [{
           type: 'category',
@@ -619,16 +589,6 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
         y: 'top',
         data: legends
       },
-      // toolbox: {
-      //   show: true,
-      //   feature: {
-      //     saveAsImage: {
-      //       name: 'Issue per Area Per Status-' + new Date().getTime(),
-      //       title: 'Save',
-      //       show: true
-      //     }
-      //   }
-      // },
       calculable: true,
       xAxis: [{
         type: 'category',
@@ -659,21 +619,21 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
       .value();
 
     //prepare unique priority for bar chart series
-    var prioroties = _.chain($scope.standings)
+    var priorities = _.chain($scope.standings)
       .map('priority')
       .uniqBy('name')
       .value();
 
     //prepare unique priority color for bar chart and legends color
-    var colors = _.map(prioroties, 'color');
+    var colors = _.map(priorities, 'color');
 
     //prepare unique priority name for bar chart legends label
-    var legends = _.map(prioroties, 'name');
+    var legends = _.map(priorities, 'name');
 
     //prepare bar chart series
     var series = {};
     _.forEach(categories, function (category) {
-      _.forEach(prioroties, function (priority) {
+      _.forEach(priorities, function (priority) {
         var serie = series[priority.name] || {
           name: priority.name,
           type: 'bar',
@@ -730,16 +690,6 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
         y: 'top',
         data: legends
       },
-      // toolbox: {
-      //   show: true,
-      //   feature: {
-      //     saveAsImage: {
-      //       name: 'Issue per Area Per Priority-' + new Date().getTime(),
-      //       title: 'Save',
-      //       show: true
-      //     }
-      //   }
-      // },
       calculable: true,
       xAxis: [{
         type: 'category',
@@ -758,6 +708,17 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
    * Reload standing reports
    */
   $scope.reload = function () {
+
+    $scope.params = Summary.prepareQuery($scope.filters);
+
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+
     Summary
       .standings({
         query: $scope.params
@@ -765,6 +726,10 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
       .then(function (standings) {
         $scope.standings = standings;
         $scope.prepare();
+        $ionicLoading.hide();
+      }).catch(function (error) {
+        console.log('Error: ', error);
+        $ionicLoading.hide();
       });
   };
 
@@ -783,8 +748,18 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
 
   //pre-load reports
   //prepare overview details
-  $scope.params = Summary.prepareQuery($scope.filters);
   $scope.reload();
 
   init();
+
+  $rootScope.$on('standings:reload', function () {
+    $scope.reload();
+  });
+
+  $scope.$on('$destroy', function () {
+    if ($scope.modal) {
+      $scope.modal.remove();
+    }
+  });
+
 }

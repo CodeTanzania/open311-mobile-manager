@@ -11,9 +11,9 @@ angular
   .module('dawasco')
   .controller('DashboardOverviewCtrl', DashboardOverviewCtrl);
 
-DashboardOverviewCtrl.$inject = ['$rootScope', '$scope', '$state', '$ionicModal', 'Summary', 'endpoints'];
+DashboardOverviewCtrl.$inject = ['$q', '$rootScope', '$scope', '$state', '$ionicModal', '$ionicLoading', 'Summary', 'endpoints'];
 
-function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary, endpoints) {
+function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ionicLoading, Summary, endpoints) {
 
   //initialize scope attributes
   $scope.maxDate = new Date();
@@ -42,6 +42,7 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
 
   // initialize overviews
   $scope.overviews = [];
+  $scope.issues = {};
 
 
   function init() {
@@ -612,30 +613,39 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
    */
   $scope.reload = function () {
 
-    Summary
-      .reports({
-        query: $scope.params
-      })
-      .then(function (reports) {
-        $scope.issues = reports.issues;
-      });
+    $scope.params = Summary.prepareQuery($scope.filters);
 
-    Summary
-      .overviews({
-        query: $scope.params
-      })
-      .then(function (overviews) {
-        $scope.overviews = overviews;
-        $scope.prepare();
-      });
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
 
+    $q.all([Summary.reports({
+      query: $scope.params
+    }), Summary.overviews({
+      query: $scope.params
+    })]).then(function (values) {
+
+      $scope.overviews = values[1];
+      $scope.issues = values[0].issues;
+
+      $scope.prepare();
+
+      $ionicLoading.hide();
+
+    }).catch(function (error) {
+      $ionicLoading.hide();
+    });
   };
 
 
   //listen for refresh event and reload overview accordingly
   $scope.refresh = function () {
 
-    Promise.all([Summary.overviews({
+    $q.all([Summary.overviews({
       query: $scope.params
     }), Summary.reports({
       query: $scope.params
@@ -646,13 +656,22 @@ function DashboardOverviewCtrl($rootScope, $scope, $state, $ionicModal, Summary,
 
       $scope.prepare();
       $scope.$broadcast('scroll.refreshComplete');
-    })
+    });
   };
 
+  init();
+
   //pre-load reports
-  //prepare overview details
-  $scope.params = Summary.prepareQuery($scope.filters);
   $scope.reload();
 
-  init();
+  $rootScope.$on('overviews:reload', function () {
+    $scope.reload();
+  });
+
+  $scope.$on('$destroy', function () {
+    if ($scope.modal) {
+      $scope.modal.remove();
+    }
+  });
+
 }

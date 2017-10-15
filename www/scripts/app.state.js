@@ -59,7 +59,13 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
     // Dashboard states
     .state('app.dashboard', {
       abstract: true,
-      templateUrl: 'views/layouts/tabs.html'
+      templateUrl: 'views/layouts/tabs.html',
+      controller: function ($rootScope, $scope) {
+        $scope.refresh = function (event) {
+          console.log('reload', event);
+          $rootScope.$broadcast(event);
+        };
+      }
     })
     .state('app.dashboard.overviews', {
       url: '/overviews',
