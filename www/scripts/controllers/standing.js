@@ -728,7 +728,6 @@ function DashboardStandingCtrl($rootScope, $scope, $state, $ionicModal, $ionicLo
         $scope.prepare();
         $ionicLoading.hide();
       }).catch(function (error) {
-        console.log('Error: ', error);
         $ionicLoading.hide();
       });
   };
