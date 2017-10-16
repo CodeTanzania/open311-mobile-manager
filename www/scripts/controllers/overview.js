@@ -623,14 +623,12 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
       showDelay: 0
     });
 
-    $q.all([Summary.reports({
-      query: $scope.params
-    }), Summary.overviews({
+    $q.all([Summary.overviews({
       query: $scope.params
     })]).then(function (values) {
 
-      $scope.overviews = values[1];
-      $scope.issues = values[0].issues;
+      $scope.overviews = values[0];
+      // $scope.issues = values[0].issues;
 
       $scope.prepare();
 
@@ -647,12 +645,10 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
     $q.all([Summary.overviews({
       query: $scope.params
-    }), Summary.reports({
-      query: $scope.params
     })]).then(function (values) {
 
       $scope.overviews = values[0];
-      $scope.issues = values[1].issues;
+      // $scope.issues = values[1].issues;
 
       $scope.prepare();
       $scope.$broadcast('scroll.refreshComplete');
