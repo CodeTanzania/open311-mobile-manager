@@ -127,17 +127,6 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
 
   $scope.prepare = function () {
-
-    //notify no data loaded
-    // if (!$scope.overviews || $scope.overviews.length <= 0) {
-    //   $rootScope.$broadcast('appWarning', {
-    //     message: 'No Data Found. Please Update Your Filters.'
-    //   });
-    // }
-
-    //update export filename
-    // $scope.exports.filename = 'overview_reports_' + Date.now() + '.csv';
-
     //prepare charts
     $scope.prepareIssuePerServiceGroup();
     $scope.prepareIssuePerService();
