@@ -1,0 +1,83 @@
+<ion-view view-title="Overview - Reports">
+  <ion-nav-buttons side="right">
+    <button class="button button-dawasco button-icon ion-android-funnel" ng-click="openModal()">
+    </button>
+  </ion-nav-buttons>
+  <ion-content has-subheader="false">
+    <ion-refresher on-refresh="refresh()" pulling-icon="ion-ios-arrow-thin-up">
+    </ion-refresher>
+    <!-- start service group count summary  -->
+    <ion-list>
+      <ion-item class="item">
+        <h2>
+          Issue per Service Group
+        </h2>
+        <p>
+          Count of Reported Issues by Their
+          <br> Service Group
+        </p>
+      </ion-item>
+      <ion-item class="item-no-border-bottom">
+        <div class="dawasco-warning-note" ng-if="perGroupOptions.length == 0">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perGroupOptions" config="perGroupConfig" options="options"></echart>
+      </ion-item>
+    </ion-list>
+    <!-- end service group count summary -->
+    <!-- start per service summary -->
+    <ion-list>
+      <ion-item class="item">
+        <h2>
+          Issue per Service
+        </h2>
+        <p>
+          Count of Reported Issues by Their Service
+        </p>
+      </ion-item>
+      <ion-item class="item-no-border-bottom">
+        <div class="dawasco-warning-note" ng-if="perPerServiceOptions.length == 0">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perPerServiceOptions " config="perPerServiceConfig " options="options "></echart>
+      </ion-item>
+    </ion-list>
+    <!--  end per jurisdiction per service count standing -->
+    <!--start status count summary -->
+    <ion-list>
+      <ion-item class="item ">
+        <h2>
+          Issue per Status
+        </h2>
+        <p>
+          Count of Reported Issues by Their Status
+        </p>
+      </ion-item>
+      <ion-item class="item-no-border-bottom ">
+        <div class="dawasco-warning-note " ng-if="perStatusOptions.length == 0 ">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perStatusOptions " config="perStatusConfig " options="options "></echart>
+      </ion-item>
+    </ion-list>
+    <!-- end status count summary -->
+    <!--start priority count summary -->
+    <ion-list>
+      <ion-item class="item ">
+        <h2>
+          Issue per Priority
+        </h2>
+        <p>
+          Count of Reported Issues by Their Priorities
+        </p>
+      </ion-item>
+      <ion-item class="item-no-border-bottom">
+        <div class="dawasco-warning-note " ng-if="perPriorityOptions.length ==0 ">
+          No Data Found. Please Update Your Filters.
+        </div>
+        <echart ng-repeat="options in perPriorityOptions " config="perPriorityConfig " options="options "></echart>
+      </ion-item>
+    </ion-list>
+    <!-- end priority count summary -->
+  </ion-content>
+</ion-view>

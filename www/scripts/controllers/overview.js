@@ -619,7 +619,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
       $scope.overviews = values[0];
       // $scope.issues = values[0].issues;
 
-      $scope.prepare();
+      // $scope.prepare();
 
       $ionicLoading.hide();
 

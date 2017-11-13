@@ -4,80 +4,78 @@
     </button>
   </ion-nav-buttons>
   <ion-content has-subheader="false">
-    <ion-refresher on-refresh="refresh()" pulling-icon="ion-ios-arrow-thin-up">
-    </ion-refresher>
-    <!-- start service group count summary  -->
-    <ion-list>
-      <ion-item class="item">
-        <h2>
-          Issue per Service Group
-        </h2>
-        <p>
-          Count of Reported Issues by Their
-          <br> Service Group
-        </p>
-      </ion-item>
-      <ion-item class="item-no-border-bottom">
-        <div class="dawasco-warning-note" ng-if="perGroupOptions.length == 0">
-          No Data Found. Please Update Your Filters.
+    <!-- start overview summary -->
+    <div class="row p-0">
+      <!-- start total overview indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-r b-b">
+          <div class="text-center">
+            <h2>74</h2>
+            <p class="text-muted">Total</p>
+          </div>
         </div>
-        <echart ng-repeat="options in perGroupOptions" config="perGroupConfig" options="options"></echart>
-      </ion-item>
-    </ion-list>
-    <!-- end service group count summary -->
-    <!-- start per service summary -->
-    <ion-list>
-      <ion-item class="item">
-        <h2>
-          Issue per Service
-        </h2>
-        <p>
-          Count of Reported Issues by Their Service
-        </p>
-      </ion-item>
-      <ion-item class="item-no-border-bottom">
-        <div class="dawasco-warning-note" ng-if="perPerServiceOptions.length == 0">
-          No Data Found. Please Update Your Filters.
+      </div>
+      <!-- end total overview indicator -->
+
+      <!-- start pending overview indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-b">
+          <div class="text-center">
+            <h2>14</h2>
+            <p class="text-muted">Pending</p>
+          </div>
         </div>
-        <echart ng-repeat="options in perPerServiceOptions " config="perPerServiceConfig " options="options "></echart>
-      </ion-item>
-    </ion-list>
-    <!--  end per jurisdiction per service count standing -->
-    <!--start status count summary -->
-    <ion-list>
-      <ion-item class="item ">
-        <h2>
-          Issue per Status
-        </h2>
-        <p>
-          Count of Reported Issues by Their Status
-        </p>
-      </ion-item>
-      <ion-item class="item-no-border-bottom ">
-        <div class="dawasco-warning-note " ng-if="perStatusOptions.length == 0 ">
-          No Data Found. Please Update Your Filters.
+      </div>
+      <!-- end pending overview indicator -->
+    </div>
+
+    <div class="row p-0">
+      <!-- start resolved overview indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-r b-b">
+          <div class="text-center">
+            <h2>50</h2>
+            <p class="text-muted">Resolved</p>
+          </div>
         </div>
-        <echart ng-repeat="options in perStatusOptions " config="perStatusConfig " options="options "></echart>
-      </ion-item>
-    </ion-list>
-    <!-- end status count summary -->
-    <!--start priority count summary -->
-    <ion-list>
-      <ion-item class="item ">
-        <h2>
-          Issue per Priority
-        </h2>
-        <p>
-          Count of Reported Issues by Their Priorities
-        </p>
-      </ion-item>
-      <ion-item class="item-no-border-bottom">
-        <div class="dawasco-warning-note " ng-if="perPriorityOptions.length ==0 ">
-          No Data Found. Please Update Your Filters.
+      </div>
+      <!-- end resolved overview indicator -->
+
+      <!-- start Late overview indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-b">
+          <div class="text-center">
+            <h2>0</h2>
+            <p class="text-muted">Late</p>
+          </div>
         </div>
-        <echart ng-repeat="options in perPriorityOptions " config="perPriorityConfig " options="options "></echart>
-      </ion-item>
-    </ion-list>
-    <!-- end priority count summary -->
+      </div>
+      <!-- end Late overview indicator -->
+    </div>
+
+    <div class="row p-0">
+      <!-- start average time to attend indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-r b-b">
+          <div class="text-center">
+            <h2>50</h2>
+            <p class="text-muted">Avarage Attend Time</p>
+          </div>
+        </div>
+      </div>
+      <!-- end average time to attend indicator -->
+
+      <!-- start average time to resolve indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-b">
+          <div class="text-center">
+            <h2>20</h2>
+            <p class="text-muted">Avarage Resolve Time</p>
+          </div>
+        </div>
+      </div>
+      <!-- end  average time to resolve indicator -->
+    </div>
+    <!-- end overview summary -->
   </ion-content>
 </ion-view>
