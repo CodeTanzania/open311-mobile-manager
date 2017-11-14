@@ -495,6 +495,14 @@ input.input-bordered:focus {
   border-left: 2px solid #f5c203;
 }
 
+.item-header {
+  background-color: #0B90E9;
+}
+
+.item-header h2 {
+  color: #fff !important;
+}
+
 .summary-card {
   padding: 1.5rem 0.5rem;
 }
