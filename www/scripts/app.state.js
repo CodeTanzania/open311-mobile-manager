@@ -71,7 +71,7 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
       url: '/overviews',
       views: {
         'overviews': {
-          templateUrl: 'views/dashboards/overviews.html',
+          templateUrl: 'views/dashboards/overviews/index.html',
           controller: 'DashboardOverviewCtrl'
         }
       },
