@@ -134,6 +134,14 @@ textarea {
   font-size: 0.7rem;
 }
 
+.text-md {
+  font-size: 1.1rem;
+}
+
+.pull-right {
+  float: right;
+}
+
 
 /*signin styles*/
 
@@ -487,6 +495,10 @@ input.input-bordered:focus {
   padding: 1.5rem 0.5rem;
 }
 
+.area-summary-card {
+  padding: 0.8rem 0.3rem;
+}
+
 
 /* border styles */
 
@@ -506,12 +518,20 @@ input.input-bordered:focus {
   border-top: 1px solid rgba(120, 130, 140, 0.13);
 }
 
+.b-a {
+  border: 1px solid rgba(120, 130, 140, 0.13);
+}
+
 
 /* padding */
 
-
-/* remove padding */
-
 .p-0 {
   padding: 0;
+}
+
+
+/* margin */
+
+.m-t-40 {
+  margin-top: 40px;
 }
