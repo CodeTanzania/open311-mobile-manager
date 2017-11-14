@@ -6,46 +6,6 @@
   <ion-content has-subheader="false">
     <ion-refresher on-refresh="refresh()" pulling-icon="ion-ios-arrow-thin-up">
     </ion-refresher>
-    <!-- start issue summary -->
-    <ion-list>
-      <ion-item class="item">
-        <div class="row">
-          <div class="col">
-            <h1>{{issues.total}}</h1>
-            <p>
-              Total Reported Issues
-            </p>
-          </div>
-          <div class="col">
-            <h1>{{issues.averageCallDuration.minutes}}
-              <span class="note">mins</span> {{issues.averageCallDuration.seconds}}
-              <span class="note">secs</span>
-              <h1>
-                <p>
-                  Average Call Duration
-                </p>
-          </div>
-        </div>
-      </ion-item>
-      <ion-item class="item">
-        <div class="row">
-          <div class="col">
-            <h1>{{issues.resolved}}</h1>
-            <p>
-              Resolved Issues
-            </p>
-          </div>
-          <div class="col">
-            <h1>{{issues.unresolved}}</h1>
-            <p>
-              Un Resolved Issues
-            </p>
-          </div>
-        </div>
-      </ion-item>
-    </ion-list>
-
-    <!-- end issue summary -->
     <!-- start service group count summary  -->
     <ion-list>
       <ion-item class="item">

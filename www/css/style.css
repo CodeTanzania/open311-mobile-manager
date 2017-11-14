@@ -113,6 +113,15 @@ textarea {
   text-align: center !important;
 }
 
+.text-grey {
+  color: #C3C3C3;
+}
+
+.text-muted {
+  color: inherit;
+  opacity: 0.6;
+}
+
 .text-12 {
   font-size: 12px;
 }
@@ -121,8 +130,8 @@ textarea {
   font-size: 14px;
 }
 
-.text-grey {
-  color: #C3C3C3;
+.text-sm {
+  font-size: 0.7rem;
 }
 
 
@@ -472,4 +481,37 @@ input.input-bordered:focus {
   text-align: center;
   font-style: italic;
   border-left: 2px solid #f5c203;
+}
+
+.summary-card {
+  padding: 1.5rem 0.5rem;
+}
+
+
+/* border styles */
+
+.b-r {
+  border-right: 1px solid rgba(120, 130, 140, 0.13);
+}
+
+.b-b {
+  border-bottom: 1px solid rgba(120, 130, 140, 0.13);
+}
+
+.b-l {
+  border-left: 1px solid rgba(120, 130, 140, 0.13);
+}
+
+.b-t {
+  border-top: 1px solid rgba(120, 130, 140, 0.13);
+}
+
+
+/* padding */
+
+
+/* remove padding */
+
+.p-0 {
+  padding: 0;
 }

@@ -127,17 +127,6 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
 
   $scope.prepare = function () {
-
-    //notify no data loaded
-    // if (!$scope.overviews || $scope.overviews.length <= 0) {
-    //   $rootScope.$broadcast('appWarning', {
-    //     message: 'No Data Found. Please Update Your Filters.'
-    //   });
-    // }
-
-    //update export filename
-    // $scope.exports.filename = 'overview_reports_' + Date.now() + '.csv';
-
     //prepare charts
     $scope.prepareIssuePerServiceGroup();
     $scope.prepareIssuePerService();
@@ -623,16 +612,14 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
       showDelay: 0
     });
 
-    $q.all([Summary.reports({
-      query: $scope.params
-    }), Summary.overviews({
+    $q.all([Summary.overviews({
       query: $scope.params
     })]).then(function (values) {
 
-      $scope.overviews = values[1];
-      $scope.issues = values[0].issues;
+      $scope.overviews = values[0];
+      // $scope.issues = values[0].issues;
 
-      $scope.prepare();
+      // $scope.prepare();
 
       $ionicLoading.hide();
 
@@ -647,12 +634,10 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
     $q.all([Summary.overviews({
       query: $scope.params
-    }), Summary.reports({
-      query: $scope.params
     })]).then(function (values) {
 
       $scope.overviews = values[0];
-      $scope.issues = values[1].issues;
+      // $scope.issues = values[1].issues;
 
       $scope.prepare();
       $scope.$broadcast('scroll.refreshComplete');

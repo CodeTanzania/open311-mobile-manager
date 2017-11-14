@@ -57,19 +57,6 @@ angular
 
 
     /**
-     * @description load current standing issues summary
-     * @param  {Object} params additional params
-     * @return {Object}
-     */
-    Summary.reports = function (params) {
-      return $http.get(Utils.asLink('overviews'), {
-        params: params
-      }).then(function (response) {
-        return response.data
-      });
-    };
-
-    /**
      * @description load current standings
      * @param  {Object} params additional params
      * @return {Object}
