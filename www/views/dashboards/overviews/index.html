@@ -9,7 +9,7 @@
     </ion-refresher>
     <!-- end pull to refresh -->
     <!-- start overview summary -->
-    <ng-include src="'views/dashboards/overviews/_partials/overall_summary.html'"></ng-include>
+    <ng-include ng-if="overviews.overall" src="'views/dashboards/overviews/_partials/overall_summary.html'"></ng-include>
     <!-- end overview summary -->
 
     <!-- start area overview stats -->

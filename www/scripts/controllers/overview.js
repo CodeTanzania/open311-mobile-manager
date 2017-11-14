@@ -28,7 +28,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
   //bind filters
   var defaultFilters = {
-    startedAt: moment().utc().startOf('date').toDate(),
+    startedAt: moment().utc().startOf('year').toDate(),
     endedAt: moment().utc().endOf('date').toDate(),
     statuses: [],
     services: [],
@@ -41,8 +41,8 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
   $scope.filters = defaultFilters;
 
   // initialize overviews
-  $scope.overviews = [];
-  $scope.issues = {};
+  $scope.overviews = {};
+  // $scope.issues = {};
 
 
   function init() {
@@ -73,14 +73,14 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
   // Open filters modal Window
   $scope.openModal = function () {
     $scope.modal.show();
-  }
+  };
 
 
 
   // Close Filter modal window
   $scope.closeModal = function () {
     $scope.modal.hide();
-  }
+  };
 
 
   /**
@@ -128,471 +128,6 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
   $scope.prepare = function () {
     //prepare charts
-    $scope.prepareIssuePerServiceGroup();
-    $scope.prepareIssuePerService();
-    $scope.prepareIssuePerStatus();
-    $scope.prepareIssuePerPriority();
-
-  };
-
-
-  /**
-   * prepare per service group bar chart
-   * @return {object} echart bar chart configurations
-   * @version 0.1.0
-   * @since  0.1.0
-   * @author lally elias<lallyelias87@gmail.com>
-   */
-  $scope.prepareIssuePerServiceGroup = function () {
-
-    //prepare chart config
-    $scope.perGroupConfig = {
-      height: 400,
-      forceClear: true
-    };
-
-    //prepare chart options
-    $scope.perGroupOptions = [];
-
-    //prepare unique service groups for bar chart categories
-    var categories = _.chain($scope.overviews)
-      .map('group')
-      .uniqBy('name')
-      .value();
-
-    // split charts to fit mobile device widths
-    var chunks = _.chunk(categories, 2);
-    var chunksSize = _.size(chunks);
-
-    _.forEach(chunks, function (serviceGroups, index) {
-
-      var data = _.map(serviceGroups, function (serviceGroup) {
-        var value = _.filter($scope.overviews, function (overview) {
-          return overview.group.name == serviceGroup.name;
-        })
-
-        value = value ? _.sumBy(value, 'count') : 0;
-
-        var serie = {
-          name: serviceGroup.name,
-          value: value,
-          itemStyle: {
-            normal: {
-              color: serviceGroup.color
-            }
-          }
-        };
-
-        return serie;
-
-      });
-
-      // add bottom margin for top charts
-      var chartOptions = buildChartOptions(index, chunksSize);
-
-      // prepare charts options
-      $scope.perGroupOptions.push(_.merge(chartOptions, {
-        color: _.map(data, 'itemStyle.normal.color'),
-        textStyle: {
-          fontFamily: 'Lato'
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{b} : {c}'
-        },
-        calculable: true,
-        xAxis: [{
-          type: 'category',
-          data: _.map(data, 'name'),
-          axisTick: {
-            alignWithLabel: true
-          }
-        }],
-        yAxis: [{
-          type: 'value'
-        }],
-        series: [{
-          type: 'bar',
-          barWidth: '70%',
-          label: {
-            normal: {
-              show: true
-            }
-          },
-          markPoint: { // show area with maximum and minimum
-            data: [{
-                name: 'Maximum',
-                type: 'max'
-              },
-              {
-                name: 'Minimum',
-                type: 'min'
-              }
-            ]
-          },
-          markLine: { //add average line
-            precision: 0,
-            data: [{
-              type: 'average',
-              name: 'Average'
-            }]
-          },
-          data: data
-        }]
-      }));
-
-    });
-  };
-
-
-  /**
-   * prepare per status bar chart
-   * @return {object} echart bar chart configurations
-   * @version 0.1.0
-   * @since  0.1.0
-   * @author lally elias<lallyelias87@gmail.com>
-   */
-  $scope.prepareIssuePerStatus = function () {
-
-    //prepare unique status for bar chart categories
-    var categories = _.chain($scope.overviews)
-      .map('status')
-      .uniqBy('name')
-      .value();
-
-    //prepare chart config
-    $scope.perStatusConfig = {
-      height: 400,
-      forceClear: true
-    };
-
-    // prepare charts options
-    $scope.perStatusOptions = [];
-
-    var chunks = _.chunk(categories, 3);
-    var chunksSize = _.size(chunks);
-
-    _.forEach(chunks, function (statuses, index) {
-
-      var data = _.map(statuses, function (status) {
-
-        var value = _.filter($scope.overviews, function (overview) {
-          return overview.status.name === status.name;
-        })
-
-        value = value ? _.sumBy(value, 'count') : 0;
-
-        var serie = {
-          name: status.name,
-          value: value,
-          itemStyle: {
-            normal: {
-              color: status.color
-            }
-          }
-        };
-
-        return serie;
-      });
-
-      var chartOptions = buildChartOptions(index, chunksSize);
-
-      $scope.perStatusOptions.push(_.merge(chartOptions, {
-        color: _.map(data, 'itemStyle.normal.color'),
-        textStyle: {
-          fontFamily: 'Lato'
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{b} : {c}'
-        },
-        // toolbox: {
-        //   show: true,
-        //   feature: {
-        //     saveAsImage: {
-        //       name: 'Issue per Status-' + new Date().getTime(),
-        //       title: 'Save',
-        //       show: true
-        //     }
-        //   }
-        // },
-        calculable: true,
-        xAxis: [{
-          type: 'category',
-          data: _.map(data, 'name'),
-          axisTick: {
-            alignWithLabel: true
-          }
-        }],
-        yAxis: [{
-          type: 'value'
-        }],
-        series: [{
-          type: 'bar',
-          barWidth: '70%',
-          label: {
-            normal: {
-              show: true
-            }
-          },
-          markPoint: { // show area with maximum and minimum
-            data: [{
-                name: 'Maximum',
-                type: 'max'
-              },
-              {
-                name: 'Minimum',
-                type: 'min'
-              }
-            ]
-          },
-          markLine: { //add average line
-            precision: 0,
-            data: [{
-              type: 'average',
-              name: 'Average'
-            }]
-          },
-          data: data
-        }]
-      }));
-
-    });
-
-  };
-
-
-  /**
-   * prepare per priority bar chart
-   * @return {object} echart bar chart configurations
-   * @version 0.1.0
-   * @since  0.1.0
-   * @author lally elias<lallyelias87@gmail.com>
-   */
-  $scope.prepareIssuePerPriority = function () {
-
-    //prepare chart config
-    $scope.perPriorityConfig = {
-      height: 400,
-      forceClear: true
-    };
-
-    // prepare chart options
-    $scope.perPriorityOptions = [];
-
-    //prepare unique priority for bar chart categories
-    var categories = _.chain($scope.overviews)
-      .map('priority')
-      .uniqBy('name')
-      .value();
-
-    // split charts for better visibility
-    var chunks = _.chunk(categories, 3);
-    var chunksSize = _.size(chunks);
-
-    _.forEach(chunks, function (priorities, index) {
-
-      var data = _.map(priorities, function (priority) {
-
-        var value = _.filter($scope.overviews, function (overview) {
-          return overview.priority.name === priority.name;
-        });
-
-        value = value ? _.sumBy(value, 'count') : 0;
-
-        var serie = {
-          name: priority.name,
-          value: value,
-          itemStyle: {
-            normal: {
-              color: priority.color
-            }
-          }
-        };
-
-        return serie;
-
-      });
-
-
-      // add bottom margin for top charts
-      var chartOptions = buildChartOptions(index, chunksSize);
-
-      // prepare charts options
-      $scope.perPriorityOptions.push(_.merge(chartOptions, {
-        color: _.map(data, 'itemStyle.normal.color'),
-        textStyle: {
-          fontFamily: 'Lato'
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{b} : {c}'
-        },
-        calculable: true,
-        xAxis: [{
-          type: 'category',
-          data: _.map(data, 'name'),
-          axisTick: {
-            alignWithLabel: true
-          }
-        }],
-        yAxis: [{
-          type: 'value'
-        }],
-        series: [{
-          type: 'bar',
-          barWidth: '70%',
-          label: {
-            normal: {
-              show: true
-            }
-          },
-          markPoint: { // show area with maximum and minimum
-            data: [{
-                name: 'Maximum',
-                type: 'max'
-              },
-              {
-                name: 'Minimum',
-                type: 'min'
-              }
-            ]
-          },
-          markLine: { //add average line
-            precision: 0,
-            data: [{
-              type: 'average',
-              name: 'Average'
-            }]
-          },
-          data: data
-        }]
-      }));
-
-    });
-  };
-
-
-  /**
-   * prepare per service bar chart
-   * @return {object} echart bar chart configurations
-   * @version 0.1.0
-   * @since  0.1.0
-   * @author lally elias<lallyelias87@gmail.com>
-   */
-  $scope.prepareIssuePerService = function () {
-
-    //prepare unique services for bar chart categories
-    var categories = _.chain($scope.overviews)
-      .map('service')
-      .uniqBy('name')
-      .value();
-
-
-    //prepare chart config
-    $scope.perPerServiceConfig = {
-      height: 400,
-      forceClear: true
-    };
-
-    //prepare chart options
-    $scope.perPerServiceOptions = [];
-
-    //chunk services for better charting display
-    var chunks = _.chunk(categories, 2);
-    var chunksSize = _.size(chunks);
-    _.forEach(chunks, function (services, index) {
-
-      //prepare bar chart serie data
-      var data =
-        _.map(services, function (category) {
-
-          //obtain all overviews of specified service name
-          var value =
-            _.filter($scope.overviews, function (overview) {
-              return overview.service.name === category.name;
-            });
-          value = value ? _.sumBy(value, 'count') : 0;
-
-          var serie = {
-            name: category.name,
-            value: value,
-            itemStyle: {
-              normal: {
-                color: category.color
-              }
-            }
-          };
-
-          return serie;
-
-        });
-
-      //ensure bottom margin for top charts
-      var chartOptions = buildChartOptions(index, chunksSize);
-
-      //prepare chart options
-      $scope.perPerServiceOptions.push(_.merge(chartOptions, {
-        color: _.map(data, 'itemStyle.normal.color'),
-        textStyle: {
-          fontFamily: 'Lato'
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{b} : {c}'
-        },
-        // toolbox: {
-        //   show: true,
-        //   feature: {
-        //     saveAsImage: {
-        //       name: 'Issue Per Service-' + new Date().getTime(),
-        //       title: 'Save',
-        //       show: true
-        //     }
-        //   }
-        // },
-        calculable: true,
-        xAxis: [{
-          type: 'category',
-          data: _.map(data, 'name'),
-          axisTick: {
-            alignWithLabel: true
-          }
-        }],
-        yAxis: [{
-          type: 'value'
-        }],
-        series: [{
-          type: 'bar',
-          barWidth: '70%',
-          label: {
-            normal: {
-              show: true
-            }
-          },
-          markPoint: { // show area with maximum and minimum
-            data: [{
-                name: 'Maximum',
-                type: 'max'
-              },
-              {
-                name: 'Minimum',
-                type: 'min'
-              }
-            ]
-          },
-          markLine: { //add average line
-            precision: 0,
-            data: [{
-              type: 'average',
-              name: 'Average'
-            }]
-          },
-          data: data
-        }]
-      }));
-
-    });
 
   };
 
@@ -612,36 +147,38 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
       showDelay: 0
     });
 
-    $q.all([Summary.overviews({
-      query: $scope.params
-    })]).then(function (values) {
+    Summary
+      .overviews({
+        query: $scope.params
+      })
+      .then(function (overviews) {
+        $scope.overviews = overviews;
+        $scope.prepare();
+        $ionicLoading.hide();
 
-      $scope.overviews = values[0];
-      // $scope.issues = values[0].issues;
+        console.log(overviews);
 
-      // $scope.prepare();
+      }).catch(function (error) {
+        $ionicLoading.hide();
+      });
 
-      $ionicLoading.hide();
 
-    }).catch(function (error) {
-      $ionicLoading.hide();
-    });
   };
 
 
   //listen for refresh event and reload overview accordingly
   $scope.refresh = function () {
 
-    $q.all([Summary.overviews({
-      query: $scope.params
-    })]).then(function (values) {
+    Summary
+      .overviews({
+        query: $scope.params
+      })
+      .then(function (overviews) {
+        $scope.overviews = overviews;
+        $scope.prepare();
+        $scope.$broadcast('scroll.refreshComplete');
+      });
 
-      $scope.overviews = values[0];
-      // $scope.issues = values[1].issues;
-
-      $scope.prepare();
-      $scope.$broadcast('scroll.refreshComplete');
-    });
   };
 
   init();

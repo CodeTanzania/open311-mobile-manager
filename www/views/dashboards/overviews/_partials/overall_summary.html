@@ -4,7 +4,7 @@
     <div class="col col-50 p-0">
       <div class="summary-card b-r b-b">
         <div class="text-center">
-          <h2>74</h2>
+          <h2>{{overviews.overall.count}}</h2>
           <p class="text-muted">Total</p>
         </div>
       </div>
@@ -15,7 +15,7 @@
     <div class="col col-50 p-0">
       <div class="summary-card b-b">
         <div class="text-center">
-          <h2>14</h2>
+          <h2>{{overviews.overall.pending}}</h2>
           <p class="text-muted">Pending</p>
         </div>
       </div>
@@ -28,7 +28,7 @@
     <div class="col col-50 p-0">
       <div class="summary-card b-r b-b">
         <div class="text-center">
-          <h2>50</h2>
+          <h2>{{overviews.overall.resolved}}</h2>
           <p class="text-muted">Resolved</p>
         </div>
       </div>
@@ -39,7 +39,7 @@
     <div class="col col-50 p-0">
       <div class="summary-card b-b">
         <div class="text-center">
-          <h2>0</h2>
+          <h2>{{overviews.overall.late}}</h2>
           <p class="text-muted">Late</p>
         </div>
       </div>
@@ -47,25 +47,33 @@
     <!-- end Late overview indicator -->
   </div>
 
-  <div class="row p-0">
-    <!-- start average time to attend indicator -->
-    <div class="col col-50 p-0">
-      <div class="summary-card b-r b-b">
-        <div class="text-center">
-          <h2>50</h2>
-          <p class="text-muted">Avarage Attend Time</p>
-        </div>
+  <!-- start average time to attend indicator -->
+  <div class="p-0">
+    <div class="summary-card b-r b-b">
+      <div class="text-center">
+        <h2>
+          {{overviews.overall.averageAttendTime.minutes}}
+          <span class="text-muted text-xs">mins</span>
+          {{overviews.overall.averageAttendTime.seconds}}
+          <span class="text-muted text-xs">secs</span>
+        </h2>
+        <p class="text-muted">Avarage Attend Time</p>
       </div>
     </div>
-    <!-- end average time to attend indicator -->
+  </div>
+  <!-- end average time to attend indicator -->
 
-    <!-- start average time to resolve indicator -->
-    <div class="col col-50 p-0">
-      <div class="summary-card b-b">
-        <div class="text-center">
-          <h2>20</h2>
-          <p class="text-muted">Avarage Resolve Time</p>
-        </div>
+  <!-- start average time to resolve indicator -->
+  <div class="p-0">
+    <div class="summary-card b-b">
+      <div class="text-center">
+        <h2>
+          {{overviews.overall.averageResolveTime.hours + (overviews.overall.averageResolveTime.days * 24)}}
+          <span class="text-muted text-xs">hrs</span>
+          {{overviews.overall.averageResolveTime.minutes}}
+          <span class="text-muted text-xs">mins</span>
+        </h2>
+        <p class="text-muted">Avarage Resolve Time</p>
       </div>
     </div>
     <!-- end  average time to resolve indicator -->

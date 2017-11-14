@@ -138,6 +138,10 @@ textarea {
   font-size: 1.1rem;
 }
 
+.text-xs {
+  font-size: 0.5rem;
+}
+
 .pull-right {
   float: right;
 }
