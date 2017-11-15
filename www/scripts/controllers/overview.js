@@ -11,9 +11,9 @@ angular
   .module('dawasco')
   .controller('DashboardOverviewCtrl', DashboardOverviewCtrl);
 
-DashboardOverviewCtrl.$inject = ['$q', '$rootScope', '$scope', '$state', '$ionicModal', '$ionicLoading', 'Summary', 'endpoints'];
+DashboardOverviewCtrl.$inject = ['$q', '$rootScope', '$scope', '$state', '$ionicModal', '$ionicLoading', '$filter', 'Summary', 'endpoints'];
 
-function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ionicLoading, Summary, endpoints) {
+function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ionicLoading, $filter, Summary, endpoints) {
 
   //initialize scope attributes
   $scope.maxDate = new Date();
@@ -128,6 +128,248 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
   $scope.prepare = function () {
     //prepare charts
+    $scope.prepareJurisdictionVisualization();
+    $scope.prepareServiceGroupVisualization();
+    $scope.prepareServiceVisualization();
+  };
+
+
+  /**
+   * prepare jurisdiction overview visualization
+   * @return {object} echart bar chart configurations
+   * @version 0.1.0
+   * @since  0.1.0
+   * @author lally elias<lallyelias87@gmail.com>
+   */
+  $scope.prepareJurisdictionVisualization = function (column) {
+
+    //ensure column
+    column = column || 'count';
+
+
+    //prepare chart series data
+    var data = _.map($scope.overviews.jurisdictions, function (group) {
+      return {
+        name: group.name,
+        value: group[column]
+      };
+    });
+
+    //prepare chart config
+    $scope.perJurisdictionConfig = {
+      height: 400,
+      forceClear: true
+    };
+
+    //prepare chart options
+    $scope.perJurisdictionOptions = {
+      textStyle: {
+        fontFamily: 'Lato'
+      },
+      title: {
+        text: column === 'count' ? 'Total' : _.upperFirst(column.toLowerCase()),
+        subtext: $filter('number')(_.sumBy(data, 'value'), 0),
+        x: 'center',
+        y: 'center',
+        textStyle: {
+          fontWeight: 'normal',
+          fontSize: 16
+        }
+      },
+      tooltip: {
+        show: true,
+        trigger: 'item',
+        formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+      },
+      series: [{
+        type: 'pie',
+        selectedMode: 'single',
+        radius: ['35%', '45%'],
+        color: _.map($scope.overviews.jurisdictions, 'color'),
+
+        label: {
+          normal: {
+            formatter: '{b}\n{d}%',
+          }
+        },
+        data: data
+      }]
+    };
+
+  };
+
+
+  /**
+   * prepare service group overview visualization
+   * @return {object} echart bar chart configurations
+   * @version 0.1.0
+   * @since  0.1.0
+   * @author lally elias<lallyelias87@gmail.com>
+   */
+  $scope.prepareServiceGroupVisualization = function (column) {
+
+    //ensure column
+    column = column || 'count';
+
+
+    //prepare chart series data
+    var data = _.map($scope.overviews.groups, function (group) {
+      return {
+        name: group.name,
+        value: group[column]
+      };
+    });
+
+    //prepare chart config
+    $scope.perServiceGroupConfig = {
+      height: 400,
+      forceClear: true
+    };
+
+    //prepare chart options
+    $scope.perServiceGroupOptions = {
+      textStyle: {
+        fontFamily: 'Lato'
+      },
+      title: {
+        text: column === 'count' ? 'Total' : _.upperFirst(column.toLowerCase()),
+        subtext: $filter('number')(_.sumBy(data, 'value'), 0),
+        x: 'center',
+        y: 'center',
+        textStyle: {
+          fontWeight: 'normal',
+          fontSize: 14
+        }
+      },
+      tooltip: {
+        show: true,
+        trigger: 'item',
+        formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+      },
+      series: [{
+        type: 'pie',
+        selectedMode: 'single',
+        radius: ['30%', '40%'],
+        color: _.map($scope.overviews.groups, 'color'),
+        label: {
+          normal: {
+            formatter: '{b}\n{d}%',
+          }
+        },
+        data: data
+      }]
+    };
+
+  };
+
+
+  /**
+   * prepare per service bar chart
+   * @return {object} echart bar chart configurations
+   * @version 0.1.0
+   * @since  0.1.0
+   * @author lally elias<lallyelias87@gmail.com>
+   */
+  $scope.prepareServiceVisualization = function (column) {
+
+    //ensure column
+    column = column || 'count';
+
+    //prepare unique service groups for bar chart categories
+    var categories = _.chain($scope.overviews)
+      .map('services')
+      .uniqBy('name')
+      .value();
+
+    //prepare bar chart series data
+    var data =
+      _.map($scope.overviews.services, function (service) {
+
+        var serie = {
+          name: service.name,
+          value: service[column],
+          itemStyle: {
+            normal: {
+              color: service.color
+            }
+          }
+        };
+
+        return serie;
+
+      });
+
+    //sort data by their value
+    data = _.orderBy(data, 'value', 'asc');
+
+    //prepare chart config
+    $scope.perServiceConfig = {
+      height: '1100',
+      forceClear: true
+    };
+
+    //prepare chart options
+    $scope.perServiceOptions = {
+      color: _.map(data, 'itemStyle.normal.color'),
+      textStyle: {
+        fontFamily: 'Lato'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{b} : {c}'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            name: 'Services Overview - ' + new Date().getTime(),
+            title: 'Save',
+            show: true
+          }
+        }
+      },
+      calculable: true,
+      yAxis: [{
+        type: 'category',
+        data: _.map(data, 'name'),
+        boundaryGap: true,
+        axisTick: {
+          alignWithLabel: true
+        },
+        axisLabel: {
+          rotate: 60,
+        },
+        axisLine: {
+          show: true
+        }
+      }],
+      xAxis: [{
+        type: 'value',
+        scale: true,
+        position: 'top',
+        boundaryGap: true,
+        axisTick: {
+          show: false,
+          lineStyle: {
+            color: '#ddd'
+          }
+        },
+        splitLine: {
+          show: false
+        }
+      }],
+      series: [{
+        type: 'bar',
+        barWidth: '55%',
+        label: {
+          normal: {
+            show: true,
+            position: 'right'
+          }
+        },
+        data: data
+      }]
+    };
 
   };
 
