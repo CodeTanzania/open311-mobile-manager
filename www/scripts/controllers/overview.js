@@ -136,6 +136,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
     $scope.prepareServiceGroupVisualization();
     $scope.prepareServiceVisualization();
     $scope.prepareAreaVisualization();
+    $scope.prepareAreaRanks();
   };
 
 
@@ -440,6 +441,27 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
     });
   };
 
+
+  /**
+   * prepare ranks based on total issues per area
+   * @return {Object} jurisdictions object with rank field
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepareAreaRanks = function () {
+
+    $scope.overviews.jurisdictions = _.chain($scope.overviews.jurisdictions)
+      .orderBy('count', 'desc')
+      .map(function (jurisdiction, index) {
+        return _.merge({}, jurisdiction, {
+          rank: (index + 1)
+        });
+      })
+      .sortBy('name')
+      .value();
+  };
+
   /**
    * Reload overview reports
    */
@@ -463,8 +485,6 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
         $scope.overviews = overviews;
         $scope.prepare();
         $ionicLoading.hide();
-
-        console.log(overviews);
 
       }).catch(function (error) {
         $ionicLoading.hide();
