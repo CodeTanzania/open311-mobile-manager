@@ -6,13 +6,16 @@
     </p>
   </ion-item>
 
-  <a href="" class="item" ng-repeat="area in overviews.jurisdictions">
+  <div class="item" ng-repeat="area in overviews.jurisdictions">
     <!-- start name -->
     <span class="text-md">{{area.name}}</span>
     <!-- end name -->
     <!-- start  rank -->
-    <!-- <span class="text-sm pull-right text-muted">#2</span> -->
+    <span class="text-sm pull-right text-muted">#2</span>
     <!-- end  rank -->
+
+    <echart config="visualizationPieConfig" options="area.pie"></echart>
+
     <!-- start  summary -->
     <div class="row row-summary">
       <div class="col p-0">
@@ -40,8 +43,9 @@
         </div>
       </div>
     </div>
-    <!-- end  summary -->
-  </a>
 
-  <echart config="perJurisdictionConfig" options="perJurisdictionOptions"></echart>
+    <!-- end  summary -->
+  </div>
+
+  <!-- <echart config="perJurisdictionConfig" options="perJurisdictionOptions"></echart> -->
 </ion-list>

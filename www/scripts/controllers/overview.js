@@ -43,6 +43,10 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
   // initialize overviews
   $scope.overviews = {};
   // $scope.issues = {};
+  $scope.visualizationPieConfig = {
+    height: 300,
+    forceClear: true
+  };
 
 
   function init() {
@@ -131,6 +135,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
     $scope.prepareJurisdictionVisualization();
     $scope.prepareServiceGroupVisualization();
     $scope.prepareServiceVisualization();
+    $scope.prepareAreaVisualization();
   };
 
 
@@ -373,6 +378,67 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
   };
 
+
+  /**
+   * prepare per area pie chart options
+   * @return {object} echart pie options configurations
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepareAreaVisualization = function () {
+
+    $scope.overviews.jurisdictions = _.map($scope.overviews.jurisdictions, function (jurisdiction) {
+
+      var data = [{
+        name: 'Pending',
+        value: jurisdiction.pending
+      }, {
+        name: 'Resolved',
+        value: jurisdiction.resolved
+      }];
+
+      return _.merge({}, jurisdiction, {
+        pie: {
+          textStyle: {
+            fontFamily: 'Lato'
+          },
+          title: {
+            text: 'Total',
+            subtext: jurisdiction.count,
+            x: 'center',
+            y: 'center',
+            textStyle: {
+              fontWeight: 'normal',
+              fontSize: 16
+            }
+          },
+          tooltip: {
+            show: true,
+            trigger: 'item',
+            formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+          },
+          series: [{
+            type: 'pie',
+            selectedMode: 'single',
+            radius: ['35%', '45%'],
+            color: ['#00acee',
+              '#52cdd5',
+              '#79d9f1',
+              '#a7e7ff',
+              '#c8efff'
+            ],
+            label: {
+              normal: {
+                formatter: '{b}\n{d}%',
+              }
+            },
+            data: data
+          }]
+        }
+      });
+    });
+  };
 
   /**
    * Reload overview reports
