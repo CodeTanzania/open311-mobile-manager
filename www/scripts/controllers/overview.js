@@ -132,11 +132,13 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
   $scope.prepare = function () {
     //prepare charts
+    $scope.prepareJurisdictionsVisualization();
+    $scope.prepareServiceGroupsVisualization();
+    $scope.prepareServicesVisualization();
     $scope.prepareJurisdictionVisualization();
     $scope.prepareServiceGroupVisualization();
     $scope.prepareServiceVisualization();
-    $scope.prepareAreaVisualization();
-    $scope.prepareAreaRanks();
+    $scope.prepareJurisdictionsRanks();
   };
 
 
@@ -147,7 +149,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
    * @since  0.1.0
    * @author lally elias<lallyelias87@gmail.com>
    */
-  $scope.prepareJurisdictionVisualization = function (column) {
+  $scope.prepareJurisdictionsVisualization = function (column) {
 
     //ensure column
     column = column || 'count';
@@ -212,7 +214,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
    * @since  0.1.0
    * @author lally elias<lallyelias87@gmail.com>
    */
-  $scope.prepareServiceGroupVisualization = function (column) {
+  $scope.prepareServiceGroupsVisualization = function (column) {
 
     //ensure column
     column = column || 'count';
@@ -276,7 +278,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
    * @since  0.1.0
    * @author lally elias<lallyelias87@gmail.com>
    */
-  $scope.prepareServiceVisualization = function (column) {
+  $scope.prepareServicesVisualization = function (column) {
 
     //ensure column
     column = column || 'count';
@@ -381,13 +383,13 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
 
   /**
-   * prepare per area pie chart options
+   * prepare per jurisdiction pie chart options
    * @return {object} echart pie options configurations
    * @version 0.1.0
    * @since 0.1.0
    * @author Benson Maruchu<benmaruchu@gmail.com>
    */
-  $scope.prepareAreaVisualization = function () {
+  $scope.prepareJurisdictionVisualization = function () {
 
     $scope.overviews.jurisdictions = _.map($scope.overviews.jurisdictions, function (jurisdiction) {
 
@@ -443,13 +445,128 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
 
   /**
-   * prepare ranks based on total issues per area
+   * prepare per service group pie chart options
+   * @return {object} echart pie options configurations
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepareServiceGroupVisualization = function () {
+    $scope.overviews.groups = _.map($scope.overviews.groups, function (group) {
+
+      var data = [{
+        name: 'Pending',
+        value: group.pending
+      }, {
+        name: 'Resolved',
+        value: group.resolved
+      }];
+
+      return _.merge({}, group, {
+        pie: {
+          textStyle: {
+            fontFamily: 'Lato'
+          },
+          title: {
+            text: 'Total',
+            subtext: group.count,
+            x: 'center',
+            y: 'center',
+            textStyle: {
+              fontWeight: 'normal',
+              fontSize: 16
+            }
+          },
+          tooltip: {
+            show: true,
+            trigger: 'item',
+            formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+          },
+          series: [{
+            type: 'pie',
+            selectedMode: 'single',
+            radius: ['35%', '45%'],
+            color: ['#00acee',
+              '#52cdd5',
+              '#79d9f1',
+              '#a7e7ff',
+              '#c8efff'
+            ],
+            label: {
+              normal: {
+                formatter: '{b}\n{d}%',
+              }
+            },
+            data: data
+          }]
+        }
+      });
+    });
+  };
+
+
+  $scope.prepareServiceVisualization = function () {
+    $scope.overviews.services = _.map($scope.overviews.services, function (service) {
+
+      var data = [{
+        name: 'Pending',
+        value: service.pending
+      }, {
+        name: 'Resolved',
+        value: service.resolved
+      }];
+
+      return _.merge({}, service, {
+        pie: {
+          textStyle: {
+            fontFamily: 'Lato'
+          },
+          title: {
+            text: 'Total',
+            subtext: service.count,
+            x: 'center',
+            y: 'center',
+            textStyle: {
+              fontWeight: 'normal',
+              fontSize: 16
+            }
+          },
+          tooltip: {
+            show: true,
+            trigger: 'item',
+            formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+          },
+          series: [{
+            type: 'pie',
+            selectedMode: 'single',
+            radius: ['35%', '45%'],
+            color: ['#00acee',
+              '#52cdd5',
+              '#79d9f1',
+              '#a7e7ff',
+              '#c8efff'
+            ],
+            label: {
+              normal: {
+                formatter: '{b}\n{d}%',
+              }
+            },
+            data: data
+          }]
+        }
+      });
+    });
+  };
+
+
+  /**
+   * prepare ranks based on total issues per jurisdiction
    * @return {Object} jurisdictions object with rank field
    * @version 0.1.0
    * @since 0.1.0
    * @author Benson Maruchu<benmaruchu@gmail.com>
    */
-  $scope.prepareAreaRanks = function () {
+  $scope.prepareJurisdictionsRanks = function () {
 
     $scope.overviews.jurisdictions = _.chain($scope.overviews.jurisdictions)
       .orderBy('count', 'desc')

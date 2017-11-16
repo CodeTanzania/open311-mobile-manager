@@ -5,15 +5,27 @@
       <!-- Count of Reported Issues by Their -->
     </p>
   </ion-item>
+
+  <div>
+    <echart config="perServiceGroupConfig" options="perServiceGroupOptions"></echart>
+  </div>
+
+
   <a href="" class="item" ng-repeat="group in overviews.groups">
+
     <!-- start area name -->
     <span class="text-md">{{group.name}}</span>
     <!-- end title -->
     <!-- start area rank -->
-    <!-- <span class="text-sm pull-right text-muted">#1</span> -->
+    <span class="text-sm pull-right text-muted">#1</span>
     <!-- end area rank -->
+
+    <!-- start chart -->
+    <echart config="visualizationPieConfig" options="group.pie"></echart>
+    <!-- end chart -->
+
     <!-- start area summary -->
-    <div class="row row-summary">
+    <div class="row row-summary" style="display:none">
       <div class="col p-0">
         <div class="area-summary-card b-r">
           <div class="text-center">
@@ -41,9 +53,5 @@
     </div>
     <!-- end area summary -->
   </a>
-
-  <div>
-    <echart config="perServiceGroupConfig" options="perServiceGroupOptions"></echart>
-  </div>
 
 </ion-list>
