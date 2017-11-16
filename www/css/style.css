@@ -131,7 +131,7 @@ textarea {
 }
 
 .text-sm {
-  font-size: 0.7rem;
+  font-size: 0.7rem !important;
 }
 
 .text-md {
@@ -501,6 +501,13 @@ input.input-bordered:focus {
 
 .item-header h2 {
   color: #fff !important;
+}
+
+.row-summary {
+  border: 1px solid #6d6a6a45;
+  border-radius: 13px;
+  margin-top: 38px;
+  box-shadow: 1px 2px 5px 1px #5656564a;
 }
 
 .summary-card {
