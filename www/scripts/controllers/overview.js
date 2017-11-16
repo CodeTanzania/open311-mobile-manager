@@ -139,6 +139,8 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
     $scope.prepareServiceGroupVisualization();
     $scope.prepareServiceVisualization();
     $scope.prepareJurisdictionsRanks();
+    $scope.prepareServiceGroupsRanks();
+    $scope.prepareServicesRanks();
   };
 
 
@@ -505,6 +507,13 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
   };
 
 
+  /**
+   * prepare per service pie chart options
+   * @return {object} echart pie options configurations
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
   $scope.prepareServiceVisualization = function () {
     $scope.overviews.services = _.map($scope.overviews.services, function (service) {
 
@@ -561,7 +570,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
   /**
    * prepare ranks based on total issues per jurisdiction
-   * @return {Object} jurisdictions object with rank field
+   * @return {Object} with jurisdictions<Array> objects with rank field
    * @version 0.1.0
    * @since 0.1.0
    * @author Benson Maruchu<benmaruchu@gmail.com>
@@ -572,6 +581,46 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
       .orderBy('count', 'desc')
       .map(function (jurisdiction, index) {
         return _.merge({}, jurisdiction, {
+          rank: (index + 1)
+        });
+      })
+      .sortBy('name')
+      .value();
+  };
+
+
+  /**
+   * prepare ranks based on total issues per service group
+   * @return {Object} with groups<Array>  objects with rank field
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepareServiceGroupsRanks = function () {
+    $scope.overviews.groups = _.chain($scope.overviews.groups)
+      .orderBy('count', 'desc')
+      .map(function (group, index) {
+        return _.merge({}, group, {
+          rank: (index + 1)
+        });
+      })
+      .sortBy('name')
+      .value();
+  };
+
+
+  /**
+   * prepare ranks based on total issues per service
+   * @return {Object} with services<Array> objects with rank field
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepareServicesRanks = function () {
+    $scope.overviews.services = _.chain($scope.overviews.services)
+      .orderBy('count', 'desc')
+      .map(function (service, index) {
+        return _.merge({}, service, {
           rank: (index + 1)
         });
       })
