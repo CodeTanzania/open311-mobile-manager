@@ -418,11 +418,11 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
               fontSize: 16
             }
           },
-          tooltip: {
-            show: true,
-            trigger: 'item',
-            formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
-          },
+          // tooltip: {
+          //   show: true,
+          //   trigger: 'item',
+          //   formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+          // },
           series: [{
             type: 'pie',
             selectedMode: 'single',
@@ -435,7 +435,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
             ],
             label: {
               normal: {
-                formatter: '{b}\n{d}%',
+                formatter: '{b}\n{d}%\nCount: {c}',
               }
             },
             data: data
@@ -479,11 +479,11 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
               fontSize: 16
             }
           },
-          tooltip: {
-            show: true,
-            trigger: 'item',
-            formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
-          },
+          // tooltip: {
+          //   show: true,
+          //   trigger: 'item',
+          //   formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+          // },
           series: [{
             type: 'pie',
             selectedMode: 'single',
@@ -496,7 +496,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
             ],
             label: {
               normal: {
-                formatter: '{b}\n{d}%',
+                formatter: '{b}\n{d}%\nCount: {c}',
               }
             },
             data: data
@@ -540,11 +540,11 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
               fontSize: 16
             }
           },
-          tooltip: {
-            show: true,
-            trigger: 'item',
-            formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
-          },
+          // tooltip: {
+          //   show: true,
+          //   trigger: 'item',
+          //   formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+          // },
           series: [{
             type: 'pie',
             selectedMode: 'single',
@@ -557,7 +557,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
             ],
             label: {
               normal: {
-                formatter: '{b}\n{d}%',
+                formatter: '{b}\n{d}%\nCount: {c}',
               }
             },
             data: data
