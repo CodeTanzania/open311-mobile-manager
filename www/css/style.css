@@ -160,14 +160,6 @@ img.logo {
   color: #fff !important;
 }
 
-.kusanya-footer-bar {
-  background-image: linear-gradient(0deg, #fff, #fff 50%, transparent 50%);
-}
-
-.kusanya-footer-bar .title {
-  font-size: 14px !important;
-}
-
 .signin .input {
   border-top: none !important;
   border-left: none !important;
@@ -189,25 +181,6 @@ img.logo {
 
 .page-margin {
   margin: 10% 5% 0 5%;
-}
-
-
-/* kusanya tabs styles*/
-
-.tabs-kusanya .tab-item-active {
-  /*color: #16325b !important;*/
-  /*border: 0 solid #16325b !important;*/
-}
-
-
-/* kusanya bar styles*/
-
-.bar-kusanya {
-  /*background-color: #16325b !important;*/
-}
-
-.bar-kusanya .title {
-  /*color: #fff !important;*/
 }
 
 
@@ -278,18 +251,6 @@ input.input-bordered:focus {
 }*/
 
 
-/* back button styles*/
-
-.kusanya-nav-button {
-  /*color: #fff !important;*/
-}
-
-.kusanya-nav-button-save {
-  /*border: 1px solid #fff !important;*/
-  /*background-color: #16325b !important;*/
-}
-
-
 /* observation show styles */
 
 .item-observation {
@@ -298,16 +259,6 @@ input.input-bordered:focus {
 
 .item-observation .icon {
   right: 6px;
-}
-
-.item-observation .kusanya-remark-done {
-  color: #FFC900 !important;
-  font-size: 18px !important;
-}
-
-.item-observation .kusanya-remark-pending {
-  color: #666F6F !important;
-  font-size: 18px !important;
 }
 
 
@@ -322,10 +273,6 @@ input.input-bordered:focus {
 
 .item-setting .icon {
   right: 8px;
-}
-
-.item-setting .kusanya-right-arrow {
-  color: #cbcbcb;
 }
 
 
@@ -546,10 +493,6 @@ input.input-bordered:focus {
 
 .p-0 {
   padding: 0;
-}
-
-.p-l-10 {
-  padding-left: 10px;
 }
 
 
