@@ -548,6 +548,10 @@ input.input-bordered:focus {
   padding: 0;
 }
 
+.p-l-10 {
+  padding-left: 10px;
+}
+
 
 /* margin */
 
