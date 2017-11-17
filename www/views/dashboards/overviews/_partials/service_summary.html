@@ -5,13 +5,28 @@
       <!-- Count of Reported Issues by Their -->
     </p>
   </ion-item>
-  <a href="" class="item" ng-repeat="service in overviews.services">
-    <!-- start area name -->
-    <span class="text-md">{{service.name}}</span>
-    <!-- end title -->
-    <!-- start area rank -->
-    <span class="text-sm pull-right text-muted">Rank: #{{service.rank}}</span>
-    <!-- end area rank -->
+  <div href="" class="item" ng-repeat="service in overviews.services">
+
+    <!--start item header -->
+    <div class="row">
+      <div class="col-10">
+        <!-- start letter avatar -->
+        <letter-avatar title="{{service.name}}" data="{{service.name}}" fontSize="14" height="40" width="40" shape="round">
+        </letter-avatar>
+        <!-- end letter avatar -->
+      </div>
+
+      <div class="col">
+        <!-- start name -->
+        <span class="text-md p-l-10">{{service.name}}</span>
+        <!-- end name -->
+
+        <!-- start  rank -->
+        <span class="text-sm pull-right text-muted">Rank: #{{service.rank}}</span>
+        <!-- end  rank -->
+      </div>
+    </div>
+    <!-- end item header -->
 
     <!-- start chart -->
     <echart config="visualizationPieConfig" options="service.pie"></echart>
@@ -45,7 +60,7 @@
       </div>
     </div>
     <!-- end area summary -->
-  </a>
+  </div>
 
   <!-- <echart config="perServiceConfig" options="perServiceOptions"></echart> -->
 
