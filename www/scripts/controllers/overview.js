@@ -61,18 +61,6 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
     });
   }
 
-  // build chart option which add bottom margin
-  function buildChartOptions(index, chunksSize) {
-
-    var chartOptions = (index === (chunksSize - 1)) ? {} : {
-      grid: {
-        bottom: '30%'
-      }
-    };
-
-    return chartOptions;
-  }
-
 
   // Open filters modal Window
   $scope.openModal = function () {
