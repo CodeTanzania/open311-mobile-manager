@@ -11,6 +11,8 @@ angular
     apiEndPoint: {
       web: 'http://dawasco.herokuapp.com',
       mobile: 'http://dawasco.herokuapp.com'
+      // web: 'http://127.0.0.1:3000',
+      // mobile: 'http://127.0.0.1:3000'
     },
     settings: {
       name: 'open311',
