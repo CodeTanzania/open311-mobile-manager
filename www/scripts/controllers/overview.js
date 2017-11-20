@@ -174,11 +174,11 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
           fontSize: 16
         }
       },
-      tooltip: {
-        show: true,
-        trigger: 'item',
-        formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
-      },
+      // tooltip: {
+      //   show: true,
+      //   trigger: 'item',
+      //   formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+      // },
       series: [{
         type: 'pie',
         selectedMode: 'single',
@@ -187,7 +187,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
         label: {
           normal: {
-            formatter: '{b}\n{d}%',
+            formatter: '{b}\n{d}%\n( {c} )',
           }
         },
         data: data
@@ -239,11 +239,11 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
           fontSize: 14
         }
       },
-      tooltip: {
-        show: true,
-        trigger: 'item',
-        formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
-      },
+      // tooltip: {
+      //   show: true,
+      //   trigger: 'item',
+      //   formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+      // },
       series: [{
         type: 'pie',
         selectedMode: 'single',
@@ -251,7 +251,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
         color: _.map($scope.overviews.groups, 'color'),
         label: {
           normal: {
-            formatter: '{b}\n{d}%',
+            formatter: '{b}\n{d}%\n( {c} )',
           }
         },
         data: data
@@ -414,7 +414,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
           series: [{
             type: 'pie',
             selectedMode: 'single',
-            radius: ['35%', '45%'],
+            radius: ['30%', '40%'],
             color: ['#00acee',
               '#52cdd5',
               '#79d9f1',
@@ -423,7 +423,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
             ],
             label: {
               normal: {
-                formatter: '{b}\n{d}%\nCount: {c}',
+                formatter: '{b}\n{d}%\n ( {c} )'
               }
             },
             data: data
@@ -464,7 +464,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
             y: 'center',
             textStyle: {
               fontWeight: 'normal',
-              fontSize: 16
+              fontSize: 12
             }
           },
           // tooltip: {
@@ -475,7 +475,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
           series: [{
             type: 'pie',
             selectedMode: 'single',
-            radius: ['35%', '45%'],
+            radius: ['30%', '40%'],
             color: ['#00acee',
               '#52cdd5',
               '#79d9f1',
@@ -484,7 +484,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
             ],
             label: {
               normal: {
-                formatter: '{b}\n{d}%\nCount: {c}',
+                formatter: '{b}\n{d}%\n( {c} )'
               }
             },
             data: data
@@ -536,8 +536,9 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
           series: [{
             type: 'pie',
             selectedMode: 'single',
-            radius: ['35%', '45%'],
-            color: ['#00acee',
+            radius: ['30%', '40%'],
+            color: [
+              '#00acee',
               '#52cdd5',
               '#79d9f1',
               '#a7e7ff',
@@ -545,7 +546,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
             ],
             label: {
               normal: {
-                formatter: '{b}\n{d}%\nCount: {c}',
+                formatter: '{b}\n{d}%\n( {c} )',
               }
             },
             data: data
@@ -637,6 +638,8 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
       })
       .then(function (overviews) {
         $scope.overviews = overviews;
+        console.log(overviews);
+
         $scope.prepare();
         $ionicLoading.hide();
 
