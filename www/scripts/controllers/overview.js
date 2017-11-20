@@ -638,8 +638,6 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
       })
       .then(function (overviews) {
         $scope.overviews = overviews;
-        console.log(overviews);
-
         $scope.prepare();
         $ionicLoading.hide();
 
