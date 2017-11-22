@@ -65,6 +65,11 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
           console.log('reload', event);
           $rootScope.$broadcast(event);
         };
+      },
+      resolve: {
+        party: function ($auth) {
+          return $auth.getProfile();
+        }
       }
     })
     .state('app.dashboard.overviews', {
@@ -94,7 +99,8 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
       url: '/performance',
       views: {
         'performance': {
-          templateUrl: 'views/dashboards/performance.html'
+          templateUrl: 'views/dashboards/performances/index.html',
+          controller: 'DashboardPerformanceCtrl'
         }
       },
       data: {

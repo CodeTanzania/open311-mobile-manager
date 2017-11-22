@@ -27,6 +27,17 @@ function AppController($rootScope, $ionicLoading) {
     });
   });
 
+  $rootScope.$on('signinError', function (response) {
+    $ionicLoading.hide();
+    // $cordovaToast
+    //   .showLongBottom('Wrong Email or Password')
+    //   .then(function (success) {
+
+    //   }, function (error) {
+
+    //   });
+    console.log(response);
+  });
   // $rootScope.$on('$stateChangeStart', function () {
   //   $ionicLoading.show({
   //     content: 'Loading',

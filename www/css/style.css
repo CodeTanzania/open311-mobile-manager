@@ -131,7 +131,19 @@ textarea {
 }
 
 .text-sm {
-  font-size: 0.7rem;
+  font-size: 0.7rem !important;
+}
+
+.text-md {
+  font-size: 1.1rem;
+}
+
+.text-xs {
+  font-size: 0.5rem;
+}
+
+.pull-right {
+  float: right;
 }
 
 
@@ -146,14 +158,6 @@ img.logo {
 .signin .button-signin {
   background-color: #16325b;
   color: #fff !important;
-}
-
-.kusanya-footer-bar {
-  background-image: linear-gradient(0deg, #fff, #fff 50%, transparent 50%);
-}
-
-.kusanya-footer-bar .title {
-  font-size: 14px !important;
 }
 
 .signin .input {
@@ -177,25 +181,6 @@ img.logo {
 
 .page-margin {
   margin: 10% 5% 0 5%;
-}
-
-
-/* kusanya tabs styles*/
-
-.tabs-kusanya .tab-item-active {
-  /*color: #16325b !important;*/
-  /*border: 0 solid #16325b !important;*/
-}
-
-
-/* kusanya bar styles*/
-
-.bar-kusanya {
-  /*background-color: #16325b !important;*/
-}
-
-.bar-kusanya .title {
-  /*color: #fff !important;*/
 }
 
 
@@ -266,18 +251,6 @@ input.input-bordered:focus {
 }*/
 
 
-/* back button styles*/
-
-.kusanya-nav-button {
-  /*color: #fff !important;*/
-}
-
-.kusanya-nav-button-save {
-  /*border: 1px solid #fff !important;*/
-  /*background-color: #16325b !important;*/
-}
-
-
 /* observation show styles */
 
 .item-observation {
@@ -286,16 +259,6 @@ input.input-bordered:focus {
 
 .item-observation .icon {
   right: 6px;
-}
-
-.item-observation .kusanya-remark-done {
-  color: #FFC900 !important;
-  font-size: 18px !important;
-}
-
-.item-observation .kusanya-remark-pending {
-  color: #666F6F !important;
-  font-size: 18px !important;
 }
 
 
@@ -310,10 +273,6 @@ input.input-bordered:focus {
 
 .item-setting .icon {
   right: 8px;
-}
-
-.item-setting .kusanya-right-arrow {
-  color: #cbcbcb;
 }
 
 
@@ -483,8 +442,27 @@ input.input-bordered:focus {
   border-left: 2px solid #f5c203;
 }
 
+.item-header {
+  background-color: #0B90E9;
+}
+
+.item-header h2 {
+  color: #fff !important;
+}
+
+.row-summary {
+  border: 1px solid #6d6a6a45;
+  border-radius: 13px;
+  margin-top: 38px;
+  box-shadow: 1px 2px 5px 1px #5656564a;
+}
+
 .summary-card {
   padding: 1.5rem 0.5rem;
+}
+
+.area-summary-card {
+  padding: 0.8rem 0.3rem;
 }
 
 
@@ -506,12 +484,20 @@ input.input-bordered:focus {
   border-top: 1px solid rgba(120, 130, 140, 0.13);
 }
 
+.b-a {
+  border: 1px solid rgba(120, 130, 140, 0.13);
+}
+
 
 /* padding */
 
-
-/* remove padding */
-
 .p-0 {
   padding: 0;
+}
+
+
+/* margin */
+
+.m-t-40 {
+  margin-top: 40px;
 }
