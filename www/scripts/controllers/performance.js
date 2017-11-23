@@ -12,15 +12,95 @@ angular
   .controller('DashboardPerformanceCtrl', DashboardPerformanceCtrl);
 
 
-DashboardPerformanceCtrl.$inject = ['$scope', 'party'];
+DashboardPerformanceCtrl.$inject = ['$rootScope', '$scope', '$ionicModal', 'endpoints', 'party'];
 
-function DashboardPerformanceCtrl($scope, party) {
+function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, party) {
+
+  // initialize scope attributes
+  $scope.maxDate = new Date();
+
+
+  //bind states
+  $scope.priorities = endpoints.priorities.priorities;
+  $scope.statuses = endpoints.statuses.statuses;
+  $scope.services = endpoints.services.services;
+  $scope.servicegroups = endpoints.servicegroups.servicegroups;
+  $scope.jurisdictions = endpoints.jurisdictions.jurisdictions;
 
   $scope.party = party;
+
+  $scope.jurisdiction = _.first($scope.jurisdictions);
+
+
+  //bind filters
+  var defaultFilters = {
+    // startedAt: moment().utc().startOf('date').toDate(),
+    startedAt: moment().utc().startOf('year').toDate(),
+    endedAt: moment().utc().endOf('date').toDate(),
+    jurisdictions: [].concat($scope.jurisdiction._id)
+  };
+
 
   $scope.visualizationPieConfig = {
     height: 300,
     forceClear: true
+  };
+
+  function init() {
+
+    $scope.modalTitle = 'Performance Reports - Filters';
+
+    $ionicModal.fromTemplateUrl('views/dashboards/_partials/filters.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function (modal) {
+      $scope.modal = modal;
+    });
+  }
+
+
+  // Open filters modal Window
+  $scope.openModal = function () {
+    $scope.modal.show();
+  };
+
+
+  // Close Filter modal window
+  $scope.closeModal = function () {
+    $scope.modal.hide();
+  };
+
+  /**
+   * Filter overview reports based on on current selected filters
+   * @param {Boolean} [reset] whether to clear and reset filter
+   */
+  $scope.filter = function (reset) {
+    if (reset) {
+      $scope.filters = defaultFilters;
+    }
+
+    //prepare query
+    $scope.params = Summary.prepareQuery($scope.filters);
+
+    //load reports
+    $scope.reload();
+
+    //close current modal
+    $scope.closeModal();
+  };
+
+
+  /**
+   * @name prepare
+   * @description Prepare All performances charts
+   * @type {function}
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepare = function () {
+    $scope.prepareOverviewVisualization();
+    $scope.preparePipelineVisualization();
   };
 
 
@@ -140,8 +220,30 @@ function DashboardPerformanceCtrl($scope, party) {
     };
   };
 
-  $scope.prepareOverviewVisualization();
-  $scope.preparePipelineVisualization();
 
-  console.log($scope.overviewOptions);
+  $scope.reload = function () {
+    //TODO load data from the server
+    $scope.prepare();
+  };
+
+
+  $scope.refresh = function () {
+    // TODO load data from the server
+    $scope.prepare();
+    $scope.$broadcast('scroll.refreshComplete');
+  };
+
+  init();
+
+  $scope.reload();
+
+  $rootScope.$on('performances:reload', function () {
+    $scope.reload();
+  });
+
+  $scope.$on('$destroy', function () {
+    if ($scope.modal) {
+      $scope.modal.remove();
+    }
+  });
 }

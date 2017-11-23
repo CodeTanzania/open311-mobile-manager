@@ -105,6 +105,17 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
       },
       data: {
         authenticated: true
+      },
+      resolve: {
+        endpoints: function (Summary) {
+          return Summary.endpoints({
+            query: {
+              deletedAt: {
+                $eq: null
+              }
+            }
+          });
+        }
       }
     })
     .state('app.dashboard.standing', {
