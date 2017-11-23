@@ -12,8 +12,7 @@ configFunc.$inject = ['$stateProvider', '$urlRouterProvider',
   '$ionicConfigProvider', '$authProvider', 'ENV'
 ];
 
-function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
-  $authProvider, ENV) {
+function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider, $authProvider, ENV) {
 
   //center view title always
   $ionicConfigProvider.navBar.alignTitle('center');
@@ -47,7 +46,11 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider,
 
 
   //provide fallback state
-  $urlRouterProvider.otherwise('/performance');
+  // this is a hack for fix an issue with ui router
+  $urlRouterProvider.otherwise(function ($injector, $location) {
+    var $state = $injector.get("$state");
+    $state.go('app.dashboard.performance');
+  });
 
   //base application state
   $stateProvider
