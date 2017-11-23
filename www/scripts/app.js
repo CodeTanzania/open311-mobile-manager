@@ -25,6 +25,9 @@ function runFunc($ionicPlatform /*, $cordovaSplashscreen , $cordovaStatusbar*/ )
 
     }
 
+    // get network information
+
+
     //set status bar colors
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required

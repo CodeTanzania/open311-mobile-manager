@@ -12,9 +12,9 @@ angular
   .module('dawasco')
   .controller('AppController', AppController);
 
-AppController.$inject = ['$rootScope', '$cordovaToast', '$ionicLoading'];
+AppController.$inject = ['$rootScope', '$cordovaToast', '$cordovaNetwork', '$ionicLoading'];
 
-function AppController($rootScope, $cordovaToast, $ionicLoading) {
+function AppController($rootScope, $cordovaToast, $cordovaNetwork, $ionicLoading) {
 
   $rootScope.$on('signinBegin', function () {
     $ionicLoading.show({
@@ -26,6 +26,17 @@ function AppController($rootScope, $cordovaToast, $ionicLoading) {
       showDelay: 0
     });
   });
+
+
+  if (!$cordovaNetwork.isOnline()) {
+    $cordovaToast.
+    showLongBottom('You are Currently Offline')
+      .then(function (success) {
+
+      }, function (error) {
+
+      });
+  }
 
   $rootScope.$on('signinError', function (response) {
     // show toast when login credentials are invalid
