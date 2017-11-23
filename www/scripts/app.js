@@ -6,7 +6,8 @@ angular
     'angular-echarts',
     'ngAA',
     'pickadate',
-    'checklist-model'
+    'checklist-model',
+    'ngCordova'
   ])
   .run(runFunc);
 

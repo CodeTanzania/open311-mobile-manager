@@ -12,9 +12,9 @@ angular
   .module('dawasco')
   .controller('AppController', AppController);
 
-AppController.$inject = ['$rootScope', '$ionicLoading'];
+AppController.$inject = ['$rootScope', '$cordovaToast', '$ionicLoading'];
 
-function AppController($rootScope, $ionicLoading) {
+function AppController($rootScope, $cordovaToast, $ionicLoading) {
 
   $rootScope.$on('signinBegin', function () {
     $ionicLoading.show({
@@ -28,15 +28,15 @@ function AppController($rootScope, $ionicLoading) {
   });
 
   $rootScope.$on('signinError', function (response) {
-    $ionicLoading.hide();
-    // $cordovaToast
-    //   .showLongBottom('Wrong Email or Password')
-    //   .then(function (success) {
+    // show toast when login credentials are invalid
+    $cordovaToast
+      .showLongBottom('Invalid Email or Password, Please Try Again')
+      .then(function (success) {
+        $ionicLoading.hide();
+      }, function (error) {
 
-    //   }, function (error) {
-
-    //   });
-    console.log(response);
+      });
+    // console.log(response);
   });
   // $rootScope.$on('$stateChangeStart', function () {
   //   $ionicLoading.show({
