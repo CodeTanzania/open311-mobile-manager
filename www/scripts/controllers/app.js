@@ -28,6 +28,7 @@ function AppController($rootScope, $cordovaToast, $cordovaNetwork, $ionicLoading
   });
 
 
+  // check for network connection and toast if is not online
   if (!$cordovaNetwork.isOnline()) {
     $cordovaToast.
     showLongBottom('You are Currently Offline')
