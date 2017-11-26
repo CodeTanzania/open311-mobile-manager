@@ -12,9 +12,9 @@ angular
   .controller('DashboardPerformanceCtrl', DashboardPerformanceCtrl);
 
 
-DashboardPerformanceCtrl.$inject = ['$rootScope', '$scope', '$ionicModal', 'endpoints', 'party'];
+DashboardPerformanceCtrl.$inject = ['$rootScope', '$scope', '$stateParams', '$filter', '$ionicModal', 'endpoints', 'Summary'];
 
-function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, party) {
+function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $ionicModal, endpoints, Summary) {
 
   // initialize scope attributes
   $scope.maxDate = new Date();
@@ -27,10 +27,9 @@ function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, pa
   $scope.servicegroups = endpoints.servicegroups.servicegroups;
   $scope.jurisdictions = endpoints.jurisdictions.jurisdictions;
 
-  $scope.party = party;
-
-  $scope.jurisdiction = _.first($scope.jurisdictions);
-
+  //set default jurisdiction
+  $scope.jurisdiction =
+    ($stateParams.jurisdiction || _.first($scope.jurisdictions));
 
   //bind filters
   var defaultFilters = {
@@ -40,6 +39,12 @@ function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, pa
     jurisdictions: [].concat($scope.jurisdiction._id)
   };
 
+
+  //TODO persist filter to local storages
+  $scope.filters = defaultFilters;
+
+  // initialize performances
+  $scope.performances = [];
 
   $scope.visualizationPieConfig = {
     height: 300,
@@ -70,6 +75,7 @@ function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, pa
     $scope.modal.hide();
   };
 
+
   /**
    * Filter overview reports based on on current selected filters
    * @param {Boolean} [reset] whether to clear and reset filter
@@ -81,6 +87,12 @@ function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, pa
 
     //prepare query
     $scope.params = Summary.prepareQuery($scope.filters);
+
+    //reset area
+    var _id = _.first($scope.filters.jurisdictions);
+    $scope.jurisdiction = _.find($scope.jurisdictions, {
+      '_id': _id
+    });
 
     //load reports
     $scope.reload();
@@ -99,36 +111,66 @@ function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, pa
    * @author Benson Maruchu<benmaruchu@gmail.com>
    */
   $scope.prepare = function () {
-    $scope.prepareOverviewVisualization();
-    $scope.preparePipelineVisualization();
+
+    // shaping data
+    $scope.prepareSummaries();
+
+    // prepare summary visualization
+    $scope.prepareSummaryVisualization();
+    $scope.prepareStatusesVisualization();
+    $scope.prepareServiceGroupVisualization();
+  };
+
+
+  /*
+   * Shape data
+   * TODO update to pull data from the server
+   */
+  $scope.prepareSummaries = function () {
+    //prepare summary
+    //prepare summary
+    $scope.performances.summaries = [{
+      name: 'Resolved',
+      count: $scope.performances.overall.resolved,
+      color: '#8BC34A'
+    }, {
+      name: 'Pending',
+      count: $scope.performances.overall.pending,
+      color: '#00BCD4'
+    }, {
+      name: 'Late',
+      count: $scope.performances.overall.late,
+      color: '#009688'
+    }];
   };
 
 
   /**
-   * prepare overview visualization per jurisdiction
-   * @return {object} echart pie options configurations
+   * prepare summary visualization
+   * @return {object} echart donut chart configurations
    * @version 0.1.0
-   * @since 0.1.0
-   * @author Benson Maruchu<benmaruchu@gmail.com>
+   * @since  0.1.0
+   * @author lally elias<lallyelias87@gmail.com>
    */
-  $scope.prepareOverviewVisualization = function () {
+  $scope.prepareSummaryVisualization = function () {
+
+    //prepare chart series data
+    var data = _.map($scope.performances.summaries, function (summary) {
+      return {
+        name: summary.name,
+        value: summary.count
+      };
+    });
 
 
-    var data = [{
-      name: 'Pending',
-      value: 100
-    }, {
-      name: 'Resolved',
-      value: 2000
-    }];
-
-    $scope.overviewOptions = {
+    //prepare chart options
+    $scope.perSummaryOptions = {
       textStyle: {
         fontFamily: 'Lato'
       },
       title: {
         text: 'Total',
-        subtext: 3000,
+        subtext: $filter('number')(_.sumBy(data, 'value'), 0),
         x: 'center',
         y: 'center',
         textStyle: {
@@ -136,57 +178,47 @@ function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, pa
           fontSize: 16
         }
       },
-      // tooltip: {
-      //   show: true,
-      //   trigger: 'item',
-      //   formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
-      // },
       series: [{
         type: 'pie',
         selectedMode: 'single',
-        radius: ['30%', '40%'],
-        color: [
-          '#00acee',
-          '#52cdd5',
-          '#79d9f1',
-          '#a7e7ff',
-          '#c8efff'
-        ],
+        radius: ['45%', '55%'],
+        color: _.map($scope.performances.summaries, 'color'),
         label: {
           normal: {
-            formatter: '{b}\n{d}%\n ( {c} )'
+            formatter: '{b}\n{d}%\n( {c} )',
           }
         },
         data: data
       }]
     };
+
   };
 
 
-  $scope.preparePipelineVisualization = function () {
+  /**
+   * prepare statuses visualization
+   * @return {object} echart donut chart configurations
+   * @version 0.1.0
+   * @since  0.1.0
+   * @author lally elias<lallyelias87@gmail.com>
+   */
+  $scope.prepareStatusesVisualization = function () {
+    //prepare chart series data
+    var data = _.map($scope.performances.statuses, function (status) {
+      return {
+        name: status.name,
+        value: status.count
+      };
+    });
 
-
-    var data = [{
-      name: 'Open',
-      value: 100
-    }, {
-      name: 'Escallated',
-      value: 2000
-    }, {
-      name: 'In Progress',
-      value: 500
-    }, {
-      name: 'Closed',
-      value: 127
-    }];
-
-    $scope.pipelineOptions = {
+    //prepare chart options
+    $scope.perStatusesOptions = {
       textStyle: {
         fontFamily: 'Lato'
       },
       title: {
         text: 'Total',
-        subtext: 2727,
+        subtext: $filter('number')(_.sumBy(data, 'value'), 0),
         x: 'center',
         y: 'center',
         textStyle: {
@@ -194,48 +226,249 @@ function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, pa
           fontSize: 16
         }
       },
-      // tooltip: {
-      //   show: true,
-      //   trigger: 'item',
-      //   formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
-      // },
       series: [{
         type: 'pie',
         selectedMode: 'single',
-        radius: ['30%', '40%'],
-        color: [
-          '#00acee',
-          '#52cdd5',
-          '#79d9f1',
-          '#a7e7ff',
-          '#c8efff'
-        ],
+        radius: ['45%', '55%'],
+        color: _.map($scope.performances.statuses, 'color'),
         label: {
           normal: {
-            formatter: '{b}\n{d}%\n ( {c} )'
+            formatter: '{b}\n{d}%\n( {c} )',
           }
         },
         data: data
       }]
     };
+
   };
 
 
+  /**
+   * prepare service group performance visualization
+   * @return {object} echart bar chart configurations
+   * @version 0.1.0
+   * @since  0.1.0
+   * @author lally elias<lallyelias87@gmail.com>
+   */
+  $scope.prepareServiceGroupVisualization = function (column) {
+
+    //ensure column
+    column = column || 'count';
+
+
+    //prepare chart series data
+    var data = _.map($scope.performances.groups, function (group) {
+      return {
+        name: group.name,
+        value: group[column]
+      };
+    });
+
+    //prepare chart config
+    $scope.perServiceGroupConfig = {
+      height: 400,
+      forceClear: true
+    };
+
+    //prepare chart options
+    $scope.perServiceGroupOptions = {
+      textStyle: {
+        fontFamily: 'Lato'
+      },
+      title: {
+        text: column === 'count' ? 'Total' : _.upperFirst(column.toLowerCase()),
+        subtext: $filter('number')(_.sumBy(data, 'value'), 0),
+        x: 'center',
+        y: 'center',
+        textStyle: {
+          fontWeight: 'normal',
+          fontSize: 16
+        }
+      },
+      tooltip: {
+        show: true,
+        trigger: 'item',
+        formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            name: 'Service Groups Overview - ' + new Date().getTime(),
+            title: 'Save',
+            show: true
+          }
+        }
+      },
+      series: [{
+        type: 'pie',
+        selectedMode: 'single',
+        radius: ['45%', '55%'],
+        color: _.map($scope.performances.groups, 'color'),
+
+        label: {
+          normal: {
+            formatter: '{b}\n{d}%',
+          }
+        },
+        data: data
+      }]
+    };
+
+  };
+
+
+  /**
+   * prepare per service bar chart
+   * @return {object} echart bar chart configurations
+   * @version 0.1.0
+   * @since  0.1.0
+   * @author lally elias<lallyelias87@gmail.com>
+   */
+  $scope.prepareServiceVisualization = function (column) {
+
+    //ensure column
+    column = column || 'count';
+
+    //prepare unique services for bar chart categories
+    var categories = _.chain($scope.performances)
+      .map('services')
+      .uniqBy('name')
+      .value();
+
+    //prepare bar chart series data
+    var data =
+      _.map($scope.performances.services, function (service) {
+
+        var serie = {
+          name: service.name,
+          value: service[column],
+          itemStyle: {
+            normal: {
+              color: service.color
+            }
+          }
+        };
+
+        return serie;
+
+      });
+
+    //sort data by their value
+    data = _.orderBy(data, 'value', 'asc');
+
+    //prepare chart config
+    $scope.perServiceConfig = {
+      height: '1100',
+      forceClear: true
+    };
+
+    //prepare chart options
+    $scope.perServiceOptions = {
+      color: _.map(data, 'itemStyle.normal.color'),
+      textStyle: {
+        fontFamily: 'Lato'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{b} : {c}'
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            name: 'Area Services Overview - ' + new Date().getTime(),
+            title: 'Save',
+            show: true
+          }
+        }
+      },
+      calculable: true,
+      yAxis: [{
+        type: 'category',
+        data: _.map(data, 'name'),
+        boundaryGap: true,
+        axisTick: {
+          alignWithLabel: true
+        },
+        axisLabel: {
+          rotate: 60,
+        },
+        axisLine: {
+          show: true
+        }
+      }],
+      xAxis: [{
+        type: 'value',
+        scale: true,
+        position: 'top',
+        boundaryGap: true,
+        axisTick: {
+          show: false,
+          lineStyle: {
+            color: '#ddd'
+          }
+        },
+        splitLine: {
+          show: false
+        }
+      }],
+      series: [{
+        type: 'bar',
+        barWidth: '55%',
+        label: {
+          normal: {
+            show: true,
+            position: 'right'
+          }
+        },
+        data: data
+      }]
+    };
+
+  };
+
+  /*
+   * Reload performance reports
+   */
   $scope.reload = function () {
-    //TODO load data from the server
-    $scope.prepare();
+    Summary
+      .performances({
+        query: $scope.params
+      })
+      .then(function (performances) {
+
+        $scope.performances = performances;
+
+        //ensure status are sorted by weight
+        $scope.performances.statuses =
+          _.orderBy(performances.statuses, 'weight', 'asc');
+
+        $scope.prepare();
+      });
   };
 
 
   $scope.refresh = function () {
-    // TODO load data from the server
-    $scope.prepare();
-    $scope.$broadcast('scroll.refreshComplete');
+    Summary
+      .performances({
+        query: $scope.params
+      })
+      .then(function (performances) {
+
+        $scope.performances = performances;
+
+        //ensure status are sorted by weight
+        $scope.performances.statuses =
+          _.orderBy(performances.statuses, 'weight', 'asc');
+
+        $scope.prepare();
+
+        $scope.$broadcast('scroll.refreshComplete');
+      });
   };
 
   init();
-
-  $scope.reload();
 
   $rootScope.$on('performances:reload', function () {
     $scope.reload();
@@ -246,4 +479,10 @@ function DashboardPerformanceCtrl($rootScope, $scope, $ionicModal, endpoints, pa
       $scope.modal.remove();
     }
   });
+
+  // pre-load reports
+  // prepare performance details
+  $scope.params = Summary.prepareQuery($scope.filters);
+
+  $scope.reload();
 }
