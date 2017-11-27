@@ -49,7 +49,7 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider, $a
   // this is a hack for fix an issue with ui router
   $urlRouterProvider.otherwise(function ($injector, $location) {
     var $state = $injector.get("$state");
-    $state.go('app.dashboard.performance');
+    $state.go('app.dashboard.overviews');
   });
 
   //base application state
@@ -82,6 +82,35 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider, $a
           templateUrl: 'views/dashboards/overviews/index.html',
           controller: 'DashboardOverviewCtrl'
         }
+      },
+      data: {
+        authenticated: true
+      },
+      resolve: {
+        endpoints: function (Summary) {
+          return Summary.endpoints({
+            query: {
+              deletedAt: {
+                $eq: null
+              }
+            }
+          });
+        }
+      }
+    })
+    // view jurisdiction performance from overview report
+    .state('app.dashboard.jurisdiction', {
+      url: '/jurisdiction',
+      views: {
+        'overviews': {
+          templateUrl: 'views/dashboards/performances/index.html',
+          controller: 'DashboardPerformanceCtrl'
+        }
+      },
+      params: {
+        jurisdiction: null,
+        startedAt: null,
+        endedAt: null
       },
       data: {
         authenticated: true

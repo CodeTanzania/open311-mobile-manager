@@ -27,6 +27,7 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
   $scope.servicegroups = endpoints.servicegroups.servicegroups;
   $scope.jurisdictions = endpoints.jurisdictions.jurisdictions;
 
+  console.log($stateParams);
   //set default jurisdiction
   $scope.jurisdiction =
     ($stateParams.jurisdiction || _.first($scope.jurisdictions));
