@@ -8,51 +8,51 @@
   </ion-item>
   <div>
     <div class="row p-0">
-      <!-- start total overview indicator -->
+      <!-- start open issues indicator -->
       <div class="col col-50 p-0">
         <div class="summary-card b-r b-b">
           <div class="text-center">
-            <h2>{{performances.statuses[0].count}}</h2>
-            <p class="text-muted">{{performances.statuses[0].name}}</p>
+            <h2>{{performances.statuses[0].count || 0}}</h2>
+            <p class="text-muted">{{performances.statuses[0].name || 'Open'}}</p>
           </div>
         </div>
       </div>
-      <!-- end total overview indicator -->
+      <!-- end open issues indicator -->
 
-      <!-- start pending overview indicator -->
+      <!-- start escallated issues indicator -->
       <div class="col col-50 p-0">
         <div class="summary-card b-b">
           <div class="text-center">
-            <h2>{{performances.statuses[1].count}}</h2>
-            <p class="text-muted">{{performances.statuses[1].name}}</p>
+            <h2>{{performances.statuses[1].count || 0}}</h2>
+            <p class="text-muted">{{performances.statuses[1].name || 'Escallated'}}</p>
           </div>
         </div>
       </div>
-      <!-- end pending overview indicator -->
+      <!-- end escallated issues indicator -->
     </div>
 
     <div class="row p-0">
-      <!-- start resolved overview indicator -->
+      <!-- start inprogress issues indicator -->
       <div class="col col-50 p-0">
         <div class="summary-card b-r b-b">
           <div class="text-center">
-            <h2>{{performances.statuses[2].count}}</h2>
-            <p class="text-muted">{{performances.statuses[2].name}}</p>
+            <h2>{{performances.statuses[2].count || 0}}</h2>
+            <p class="text-muted">{{performances.statuses[2].name || 'In Progress'}}</p>
           </div>
         </div>
       </div>
-      <!-- end resolved overview indicator -->
+      <!-- end inprogress issues indicator -->
 
-      <!-- start Late overview indicator -->
+      <!-- start closed isssues indicator -->
       <div class="col col-50 p-0">
         <div class="summary-card b-b">
           <div class="text-center">
-            <h2>{{performances.statuses[3].count}}</h2>
-            <p class="text-muted">{{performances.statuses[3].name}}</p>
+            <h2>{{performances.statuses[3].count || 0}}</h2>
+            <p class="text-muted">{{performances.statuses[3].name || 'Closed'}}</p>
           </div>
         </div>
       </div>
-      <!-- end Late overview indicator -->
+      <!-- end closed isssues indicator -->
 
     </div>
 
