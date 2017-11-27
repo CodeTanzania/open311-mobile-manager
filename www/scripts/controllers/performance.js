@@ -119,7 +119,7 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
     // prepare summary visualization
     $scope.prepareSummaryVisualization();
     $scope.prepareStatusesVisualization();
-    $scope.prepareServiceGroupVisualization();
+    $scope.prepareServiceGroupsVisualization();
     $scope.prepareServiceGroupVisualization();
     $scope.prepareServiceVisualization();
     $scope.prepareServiceGroupsRanks();
@@ -271,7 +271,7 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
 
     //prepare chart config
     $scope.perServiceGroupConfig = {
-      height: 400,
+      height: 300,
       forceClear: true
     };
 
@@ -290,30 +290,15 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
           fontSize: 16
         }
       },
-      tooltip: {
-        show: true,
-        trigger: 'item',
-        formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
-      },
-      toolbox: {
-        show: true,
-        feature: {
-          saveAsImage: {
-            name: 'Service Groups Overview - ' + new Date().getTime(),
-            title: 'Save',
-            show: true
-          }
-        }
-      },
       series: [{
         type: 'pie',
         selectedMode: 'single',
-        radius: ['45%', '55%'],
+        radius: ['30%', '40%'],
         color: _.map($scope.performances.groups, 'color'),
 
         label: {
           normal: {
-            formatter: '{b}\n{d}%',
+            formatter: '{b}\n{d}%\n( {c} )',
           }
         },
         data: data
