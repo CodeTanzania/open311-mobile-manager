@@ -1,0 +1,71 @@
+<ion-list>
+  <ion-item class="item-header">
+    <h2>Service Group Summary</h2>
+    <p>
+      <!-- Count of Reported Issues by Their -->
+    </p>
+  </ion-item>
+
+  <div>
+    <!-- <echart config="perServiceGroupConfig" options="perServiceGroupOptions"></echart> -->
+  </div>
+
+
+  <div href="" class="item" ng-repeat="group in performances.groups">
+
+    <!--start item header -->
+    <div class="row">
+      <div class="col-10">
+        <!-- start letter avatar -->
+        <letter-avatar title="{{group.name}}" data="{{group.name}}" fontSize="12" height="30" width="30" shape="round">
+        </letter-avatar>
+        <!-- end letter avatar -->
+      </div>
+
+      <div class="col">
+        <!-- start name -->
+        <span class="text-md">{{group.name}}</span>
+        <!-- end name -->
+
+        <!-- start  rank -->
+        <span class="text-sm pull-right text-muted">Rank: #{{group.rank}}</span>
+        <!-- end  rank -->
+      </div>
+    </div>
+    <!-- end item header -->
+
+    <!-- start chart -->
+    <echart config="visualizationPieConfig" options="group.pie"></echart>
+    <!-- end chart -->
+
+    <!-- start area summary -->
+    <div class="row row-summary" style="display:none">
+      <div class="col p-0">
+        <div class="area-summary-card b-r">
+          <div class="text-center">
+            <h2>{{group.count}}</h2>
+            <p class="text-muted">Total</p>
+          </div>
+        </div>
+      </div>
+      <div class="col p-0">
+        <div class="area-summary-card b-r">
+          <div class="text-center">
+            <h2>{{group.pending}}</h2>
+            <p class="text-muted">Pending</p>
+          </div>
+        </div>
+      </div>
+      <div class="col p-0">
+        <div class="area-summary-card">
+          <div class="text-center">
+            <h2>{{group.resolved}}</h2>
+            <p class="text-muted">Resolved</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end area summary -->
+  </div>
+
+</ion-list>

@@ -27,7 +27,7 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
   $scope.servicegroups = endpoints.servicegroups.servicegroups;
   $scope.jurisdictions = endpoints.jurisdictions.jurisdictions;
 
-  console.log($stateParams);
+
   //set default jurisdiction
   $scope.jurisdiction =
     ($stateParams.jurisdiction || _.first($scope.jurisdictions));
@@ -120,6 +120,10 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
     $scope.prepareSummaryVisualization();
     $scope.prepareStatusesVisualization();
     $scope.prepareServiceGroupVisualization();
+    $scope.prepareServiceGroupVisualization();
+    $scope.prepareServiceVisualization();
+    $scope.prepareServiceGroupsRanks();
+    $scope.prepareServicesRanks();
   };
 
 
@@ -251,7 +255,7 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
    * @since  0.1.0
    * @author lally elias<lallyelias87@gmail.com>
    */
-  $scope.prepareServiceGroupVisualization = function (column) {
+  $scope.prepareServiceGroupsVisualization = function (column) {
 
     //ensure column
     column = column || 'count';
@@ -326,7 +330,7 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
    * @since  0.1.0
    * @author lally elias<lallyelias87@gmail.com>
    */
-  $scope.prepareServiceVisualization = function (column) {
+  $scope.prepareServicesVisualization = function (column) {
 
     //ensure column
     column = column || 'count';
@@ -428,6 +432,170 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
     };
 
   };
+
+
+  /**
+   * prepare per service group pie chart options
+   * @return {object} echart pie options configurations
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepareServiceGroupVisualization = function () {
+    $scope.performances.groups = _.map($scope.performances.groups, function (group) {
+
+      var data = [{
+        name: 'Pending',
+        value: group.pending
+      }, {
+        name: 'Resolved',
+        value: group.resolved
+      }];
+
+      return _.merge({}, group, {
+        pie: {
+          textStyle: {
+            fontFamily: 'Lato'
+          },
+          title: {
+            text: 'Total',
+            subtext: group.count,
+            x: 'center',
+            y: 'center',
+            textStyle: {
+              fontWeight: 'normal',
+              fontSize: 12
+            }
+          },
+          // tooltip: {
+          //   show: true,
+          //   trigger: 'item',
+          //   formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+          // },
+          series: [{
+            type: 'pie',
+            selectedMode: 'single',
+            radius: ['30%', '40%'],
+            color: ['#00acee',
+              '#52cdd5',
+              '#79d9f1',
+              '#a7e7ff',
+              '#c8efff'
+            ],
+            label: {
+              normal: {
+                formatter: '{b}\n{d}%\n( {c} )'
+              }
+            },
+            data: data
+          }]
+        }
+      });
+    });
+  };
+
+
+  /**
+   * prepare per service pie chart options
+   * @return {object} echart pie options configurations
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepareServiceVisualization = function () {
+    $scope.performances.services = _.map($scope.performances.services, function (service) {
+
+      var data = [{
+        name: 'Pending',
+        value: service.pending
+      }, {
+        name: 'Resolved',
+        value: service.resolved
+      }];
+
+      return _.merge({}, service, {
+        pie: {
+          textStyle: {
+            fontFamily: 'Lato'
+          },
+          title: {
+            text: 'Total',
+            subtext: service.count,
+            x: 'center',
+            y: 'center',
+            textStyle: {
+              fontWeight: 'normal',
+              fontSize: 16
+            }
+          },
+          // tooltip: {
+          //   show: true,
+          //   trigger: 'item',
+          //   formatter: "{b}:<br/> Count: {c} <br/> Percent: ({d}%)"
+          // },
+          series: [{
+            type: 'pie',
+            selectedMode: 'single',
+            radius: ['30%', '40%'],
+            color: [
+              '#00acee',
+              '#52cdd5',
+              '#79d9f1',
+              '#a7e7ff',
+              '#c8efff'
+            ],
+            label: {
+              normal: {
+                formatter: '{b}\n{d}%\n( {c} )',
+              }
+            },
+            data: data
+          }]
+        }
+      });
+    });
+  };
+
+
+  /**
+   * prepare ranks based on total issues per service
+   * @return {Object} with services<Array> objects with rank field
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepareServicesRanks = function () {
+    $scope.performances.services = _.chain($scope.performances.services)
+      .orderBy('count', 'desc')
+      .map(function (service, index) {
+        return _.merge({}, service, {
+          rank: (index + 1)
+        });
+      })
+      .sortBy('name')
+      .value();
+  };
+
+
+  /**
+   * prepare ranks based on total issues per service group
+   * @return {Object} with groups<Array>  objects with rank field
+   * @version 0.1.0
+   * @since 0.1.0
+   * @author Benson Maruchu<benmaruchu@gmail.com>
+   */
+  $scope.prepareServiceGroupsRanks = function () {
+    $scope.performances.groups = _.chain($scope.performances.groups)
+      .orderBy('count', 'desc')
+      .map(function (group, index) {
+        return _.merge({}, group, {
+          rank: (index + 1)
+        });
+      })
+      .sortBy('name')
+      .value();
+  };
+
 
   /*
    * Reload performance reports
