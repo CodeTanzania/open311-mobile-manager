@@ -56,7 +56,7 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
 
     $scope.modalTitle = 'Performance Reports - Filters';
 
-    $ionicModal.fromTemplateUrl('views/dashboards/_partials/filters.html', {
+    $ionicModal.fromTemplateUrl('views/templates/filters/filters.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {

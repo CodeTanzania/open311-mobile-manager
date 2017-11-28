@@ -79,7 +79,7 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider, $a
       url: '/overviews',
       views: {
         'overviews': {
-          templateUrl: 'views/dashboards/overviews/index.html',
+          templateUrl: 'views/dashboards/overviews.html',
           controller: 'DashboardOverviewCtrl'
         }
       },
@@ -103,7 +103,7 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider, $a
       url: '/jurisdiction',
       views: {
         'overviews': {
-          templateUrl: 'views/dashboards/performances/index.html',
+          templateUrl: 'views/dashboards/performances.html',
           controller: 'DashboardPerformanceCtrl'
         }
       },
@@ -131,7 +131,7 @@ function configFunc($stateProvider, $urlRouterProvider, $ionicConfigProvider, $a
       url: '/performance',
       views: {
         'performance': {
-          templateUrl: 'views/dashboards/performances/index.html',
+          templateUrl: 'views/dashboards/performances.html',
           controller: 'DashboardPerformanceCtrl'
         }
       },
