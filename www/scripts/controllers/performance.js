@@ -12,9 +12,9 @@ angular
   .controller('DashboardPerformanceCtrl', DashboardPerformanceCtrl);
 
 
-DashboardPerformanceCtrl.$inject = ['$rootScope', '$scope', '$stateParams', '$filter', '$ionicModal', 'endpoints', 'Summary'];
+DashboardPerformanceCtrl.$inject = ['$rootScope', '$scope', '$stateParams', '$filter', '$ionicLoading', '$ionicModal', 'endpoints', 'Summary'];
 
-function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $ionicModal, endpoints, Summary) {
+function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $ionicLoading, $ionicModal, endpoints, Summary) {
 
   // initialize scope attributes
   $scope.maxDate = new Date();
@@ -586,6 +586,20 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
    * Reload performance reports
    */
   $scope.reload = function () {
+
+    // pre-load reports
+    // prepare performance details
+    $scope.params = Summary.prepareQuery($scope.filters);
+
+
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
+
     Summary
       .performances({
         query: $scope.params
@@ -599,6 +613,9 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
           _.orderBy(performances.statuses, 'weight', 'asc');
 
         $scope.prepare();
+        $ionicLoading.hide();
+      }).catch(function (error) {
+        $ionicLoading.hide();
       });
   };
 
@@ -634,9 +651,6 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
     }
   });
 
-  // pre-load reports
-  // prepare performance details
-  $scope.params = Summary.prepareQuery($scope.filters);
 
   $scope.reload();
 }
