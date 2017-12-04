@@ -28,39 +28,33 @@ function AppController($rootScope, $cordovaToast, $cordovaNetwork, $ionicLoading
   });
 
 
-  // check for network connection and toast if is not online
-  // if (!$cordovaNetwork.isOnline()) {
-  //   $cordovaToast.
-  //   showLongBottom('You are Currently Offline')
-  //     .then(function (success) {
 
-  //     }, function (error) {
-
-  //     });
-  // }
 
   $rootScope.$on('signinError', function (response) {
-    // show toast when login credentials are invalid
-    $cordovaToast
-      .showLongBottom('Invalid Email or Password, Please Try Again')
-      .then(function (success) {
-        $ionicLoading.hide();
-      }, function (error) {
 
-      });
-    // console.log(response);
+    // check for network connection and toast if it is offline
+    if (!$cordovaNetwork.isOnline()) {
+      $cordovaToast.
+      showLongBottom('No Network Connection')
+        .then(function (success) {
+          $ionicLoading.hide();
+        }, function (error) {
+          console.log(error);
+          $ionicLoading.hide();
+        });
+    } else {
+
+      // show toast when login credentials are invalid
+      $cordovaToast
+        .showLongBottom('Invalid Email or Password, Please Try Again')
+        .then(function (success) {
+          $ionicLoading.hide();
+        }, function (error) {
+          console.log(error);
+          $ionicLoading.hide();
+        });
+
+    }
   });
-  // $rootScope.$on('$stateChangeStart', function () {
-  //   $ionicLoading.show({
-  //     content: 'Loading',
-  //     animation: 'fade-in',
-  //     showBackdrop: true,
-  //     maxWidth: 200,
-  //     showDelay: 0
-  //   });
-  // });
 
-  // $rootScope.$on('$stateChangeSuccess', function () {
-  //   $ionicLoading.hide();
-  // });
 }
