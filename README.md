@@ -7,7 +7,7 @@ open311-mobile-manager
 ## Setup
 - Ensure legacy ionic view
 ```sh
-$ ionic config set -g backend legacy
+$ ionic config set -g backend pro
 ```
 
 ## Quick Fixes
