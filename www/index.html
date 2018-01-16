@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link rel="manifest" href="manifest.json">
+
+  <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="lib/ionic/release/css/ionic.css" />
+  <link rel="stylesheet" href="lib/lato/css/lato.css" />
+  <link rel="stylesheet" href="lib/simple-line-icons/css/simple-line-icons.css" />
+  <link rel="stylesheet" href="lib/angular-pickadate/dist/angular-pickadate.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+
+
+  <!-- <link href="lib/ionic/css/ionic.css " rel="stylesheet "> -->
+  <!-- build:css styles/app.css -->
+  <link href="css/style.css " rel="stylesheet ">
+  <!-- endbuild -->
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css " rel="stylesheet ">
+    -->
+
+  <!-- ionic/angularjs js -->
+  <!-- <script src="lib/ionic/js/ionic.bundle.js "></script> -->
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="lib/ionic/release/js/ionic.bundle.js "></script>
+  <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+  <script src="lib/lodash/lodash.js "></script>
+  <script src="lib/echarts/dist/echarts.js "></script>
+  <!-- <script src="lib/angular-echarts/dist/angular-echarts.js "></script> -->
+  <script src="lib/ngstorage/ngStorage.js "></script>
+  <script src="lib/angular-jwt/dist/angular-jwt.js "></script>
+  <script src="lib/ng-aa/dist/ng-aa.js "></script>
+  <script src="lib/angular-pickadate/dist/angular-pickadate.min.js "></script>
+  <script src="lib/checklist-model/checklist-model.js "></script>
+  <script src="lib/moment/moment.js "></script>
+  <!-- <script type="text/javascript" src="js/Toast.js"></script> -->
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- your app's js -->
+  <!-- build:js scripts/app.js -->
+  <script src="scripts/module/echart.js"></script>
+  <script src="scripts/app.js "></script>
+  <script src="scripts/app.state.js "></script>
+  <script src="scripts/config.js "></script>
+  <!-- directives -->
+  <script src="scripts/directives/letteravatar.js"></script>
+  <!-- end directives -->
+  <!-- services -->
+  <script src="scripts/services/utils.js "></script>
+  <script src="scripts/services/summary.js "></script>
+  <!-- end services -->
+  <!-- controllers -->
+  <script src="scripts/controllers/app.js "></script>
+  <script src="scripts/controllers/overview.js "></script>
+  <script src="scripts/controllers/standing.js "></script>
+  <script src="scripts/controllers/performance.js "></script>
+  <!-- end controllers -->
+  <!-- endbuild -->
+
+</head>
+
+<body ng-app="dawasco" ng-controller="AppController ">
+  <ion-nav-view>
+  </ion-nav-view>
+</body>
+
+</html>

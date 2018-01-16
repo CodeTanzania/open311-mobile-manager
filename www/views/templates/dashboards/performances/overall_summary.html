@@ -1,0 +1,79 @@
+<!-- start overview summmary -->
+<ion-list>
+  <ion-item class="m-t-40 item-header">
+    <h2>Area Overview Summary</h2>
+    <p>
+      <!-- Count of Reported Issues by Their -->
+    </p>
+  </ion-item>
+  <div>
+    <div class="row p-0">
+      <!-- start total overview indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-r b-b">
+          <div class="text-center">
+            <h2> {{performances.overall.count | number:0}}</h2>
+            <p class="text-muted">Total</p>
+          </div>
+        </div>
+      </div>
+      <!-- end total overview indicator -->
+
+      <!-- start pending overview indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-b">
+          <div class="text-center">
+            <h2>{{performances.overall.pending | number:0}}</h2>
+            <p class="text-muted">Pending</p>
+          </div>
+        </div>
+      </div>
+      <!-- end pending overview indicator -->
+    </div>
+
+    <div class="row p-0">
+      <!-- start resolved overview indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-r b-b">
+          <div class="text-center">
+            <h2> {{performances.overall.resolved | number:0}}</h2>
+            <p class="text-muted">Resolved</p>
+          </div>
+        </div>
+      </div>
+      <!-- end resolved overview indicator -->
+
+      <!-- start Late overview indicator -->
+      <div class="col col-50 p-0">
+        <div class="summary-card b-b">
+          <div class="text-center">
+            <h2>{{performances.overall.late | number:0}}</h2>
+            <p class="text-muted">Late</p>
+          </div>
+        </div>
+      </div>
+      <!-- end Late overview indicator -->
+
+    </div>
+
+    <!-- start escallated overview indicator -->
+    <div class="p-0">
+      <div class="summary-card b-b">
+        <div class="text-center">
+          <h2>
+            {{performances.overall.late | number:0}}
+          </h2>
+          <p class="text-muted">Escallated</p>
+        </div>
+      </div>
+    </div>
+    <!-- end escallated overview indicator -->
+
+    <!-- start overview visualization -->
+    <echart config="visualizationPieConfig" options="perSummaryOptions"></echart>
+    <!-- end overview visualization -->
+  </div>
+</ion-list>
+
+
+<!-- end overview summmary -->
