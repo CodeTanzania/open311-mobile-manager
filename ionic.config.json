@@ -1,6 +1,6 @@
 {
   "name": "open311-mobile-manager",
-  "app_id": "08c2d176",
+  "app_id": "34e4b43b",
   "type": "ionic1",
   "integrations": {
     "gulp": {},
@@ -12,5 +12,5 @@
     "!www/lib/**/*",
     "!www/**/*.map"
   ],
-  "backend": "legacy"
+  "backend": "pro"
 }
