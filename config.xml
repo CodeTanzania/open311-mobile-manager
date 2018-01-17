@@ -87,7 +87,6 @@
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.11" />
-    <plugin name="cordova-plugin-network-information" spec="^1.3.4" />
     <plugin name="cordova-plugin-ionic" spec="^2.0.4">
         <variable name="APP_ID" value="08c2d176" />
         <variable name="CHANNEL_NAME" value="Master" />
@@ -95,4 +94,5 @@
         <variable name="UPDATE_API" value="https://api.ionicjs.com" />
         <variable name="MAX_STORE" value="2" />
     </plugin>
+    <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
 </widget>
