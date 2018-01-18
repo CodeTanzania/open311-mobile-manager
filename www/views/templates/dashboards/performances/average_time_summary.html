@@ -4,9 +4,9 @@
   <div class="summary-card">
     <div class="text-center">
       <h2>
-        {{performances.overall.averageAttendTime.minutes}}
+        {{performances.overall.averageAttendTime.minutes ? performances.overall.averageAttendTime.minutes : 0}}
         <span class="text-muted text-sm">mins</span>
-        {{performances.overall.averageAttendTime.seconds}}
+        {{performances.overall.averageAttendTime.seconds ? performances.overall.averageAttendTime.seconds : 0}}
         <span class="text-muted text-sm">secs</span>
       </h2>
       <p class="text-muted">Average Attend Time</p>
@@ -20,11 +20,12 @@
   <div class="summary-card">
     <div class="text-center">
       <h2>
-        {{performances.overall.averageResolveTime.days}}
+        {{performances.overall.averageResolveTime.days ? performances.overall.averageResolveTime.minutesperformances.overall.averageResolveTime.days
+        : 0}}
         <span class="text-muted text-sm">days</span>
-        {{performances.overall.averageResolveTime.hours}}
+        {{performances.overall.averageResolveTime.hours ? performances.overall.averageResolveTime.hours : 0}}
         <span class="text-muted text-sm">hrs</span>
-        {{performances.overall.averageResolveTime.minutes}}
+        {{performances.overall.averageResolveTime.minutes ? performances.overall.averageResolveTime.minutes : 0 }}
         <span class="text-muted text-sm">mins</span>
       </h2>
       <p class="text-muted">Average Resolve Time</p>
