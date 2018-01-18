@@ -135,7 +135,6 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
    */
   $scope.prepareSummaries = function () {
 
-    console.log($scope.performances);
     //prepare summary
     $scope.performances.summaries = [{
       name: 'Resolved',
