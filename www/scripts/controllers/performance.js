@@ -32,12 +32,13 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
   $scope.jurisdiction =
     ($stateParams.jurisdiction || _.first($scope.jurisdictions));
 
+
   //bind filters
   var defaultFilters = {
     // startedAt: moment().utc().startOf('date').toDate(),
-    startedAt: moment().utc().startOf('year').toDate(),
-    endedAt: moment().utc().endOf('date').toDate(),
-    jurisdictions: [].concat($scope.jurisdiction._id)
+    startedAt: $stateParams.startedAt || moment().utc().startOf('year').toDate(),
+    endedAt: $stateParams.endedAt || moment().utc().endOf('date').toDate(),
+    jurisdictions: $scope.jurisdiction._id
   };
 
 
@@ -56,7 +57,7 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
 
     $scope.modalTitle = 'Performance Reports - Filters';
 
-    $ionicModal.fromTemplateUrl('views/templates/filters/filters.html', {
+    $ionicModal.fromTemplateUrl('views/templates/filters/performanceFilters.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {
@@ -90,11 +91,12 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
     $scope.params = Summary.prepareQuery($scope.filters);
 
     //reset area
-    var _id = _.first($scope.filters.jurisdictions);
+    var _id = $scope.filters.jurisdictions;
     $scope.jurisdiction = _.find($scope.jurisdictions, {
       '_id': _id
     });
 
+    console.log($scope.jurisdiction);
     //load reports
     $scope.reload();
 
@@ -132,19 +134,20 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
    * TODO update to pull data from the server
    */
   $scope.prepareSummaries = function () {
-    //prepare summary
+
+    console.log($scope.performances);
     //prepare summary
     $scope.performances.summaries = [{
       name: 'Resolved',
-      count: $scope.performances.overall.resolved,
+      count: _.get($scope.performances, 'overall.resolved', 0),
       color: '#8BC34A'
     }, {
       name: 'Pending',
-      count: $scope.performances.overall.pending,
+      count: _.get($scope.performances, 'overall.pending', 0),
       color: '#00BCD4'
     }, {
       name: 'Late',
-      count: $scope.performances.overall.late,
+      count: _.get($scope.performances, 'overall.late', 0),
       color: '#009688'
     }];
   };
