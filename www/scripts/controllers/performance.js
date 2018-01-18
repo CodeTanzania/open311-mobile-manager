@@ -96,7 +96,6 @@ function DashboardPerformanceCtrl($rootScope, $scope, $stateParams, $filter, $io
       '_id': _id
     });
 
-    console.log($scope.jurisdiction);
     //load reports
     $scope.reload();
 

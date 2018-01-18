@@ -19,9 +19,7 @@
         </p>
       </ion-item>
       <ion-item class="item-no-border-bottom">
-        <div class="dawasco-warning-note " ng-if="perJurisdictionOptions.length == 0 ">
-          No Data Found. Please Update Your Filters.
-        </div>
+
         <echart ng-repeat="options in perJurisdictionOptions" config="perJurisdictionConfig" options="options"></echart>
       </ion-item>
     </ion-list>
