@@ -143,7 +143,6 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
    */
   $scope.prepareJurisdictionsVisualization = function (column) {
 
-    console.log('clicked');
     //ensure column
     column = column || 'count';
 
