@@ -20,11 +20,14 @@
     <ng-include ng-if="performances.overall" src="'views/templates/dashboards/performances/average_time_summary.html'"></ng-include>
     <!-- end average time summary -->
 
-    <div class="padding" ng-if="!performances.overall">
+    <!-- no data message -->
+    <div ng-if="!performances.overall">
       <div class="dawasco-warning-note">
-        No Data Found. Please Update Your Filters.
+        No Data Found for {{jurisdiction.name}}. Please Update Your Filters.
       </div>
     </div>
+    <!-- end of no data message -->
+
     <!-- start overview summary -->
     <ng-include ng-if="performances.overall" src="'views/templates/dashboards/performances/overall_summary.html'"></ng-include>
     <!-- end overview summary -->

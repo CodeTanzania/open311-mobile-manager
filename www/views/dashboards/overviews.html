@@ -8,23 +8,32 @@
     <ion-refresher on-refresh="refresh()" pulling-icon="ion-ios-arrow-thin-up">
     </ion-refresher>
     <!-- end pull to refresh -->
+
+    <!-- no data message -->
+    <div ng-if="!overviews.overall">
+      <div class="dawasco-warning-note center">
+        No Data Found Today. Please Update Your Filters.
+      </div>
+    </div>
+    <!-- end of no data message -->
+
     <!-- start overview summary -->
     <ng-include ng-if="overviews.overall" src="'views/templates/dashboards/overviews/overall_summary.html'"></ng-include>
     <!-- end overview summary -->
     <!-- start jurisdictions overview stats -->
-    <ng-include ng-if="overviews.jurisdictions" src="'views/templates/dashboards/overviews/jurisdictions_summary.html'"></ng-include>
+    <ng-include ng-if="overviews.jurisdictions && overviews.jurisdictions.length > 0" src="'views/templates/dashboards/overviews/jurisdictions_summary.html'"></ng-include>
     <!-- end jurisdictions overview stats -->
     <!-- start service group stats -->
-    <ng-include ng-if="overviews.groups" src="'views/templates/dashboards/overviews/service_group_summary.html'"></ng-include>
+    <ng-include ng-if="overviews.groups && overviews.groups.length > 0" src="'views/templates/dashboards/overviews/service_group_summary.html'"></ng-include>
     <!-- end service group stats -->
     <!-- start service stats -->
-    <ng-include ng-if="overviews.services" src="'views/templates/dashboards/overviews/service_summary.html'"></ng-include>
+    <ng-include ng-if="overviews.services && overviews.services.length > 0" src="'views/templates/dashboards/overviews/service_summary.html'"></ng-include>
     <!-- end service stats -->
     <!-- start reporting methods summary -->
-    <ng-include ng-if="overviews.services" src="'views/templates/dashboards/overviews/method_summary.html'"></ng-include>
+    <ng-include ng-if="overviews.methods && overviews.methods.length > 0" src="'views/templates/dashboards/overviews/method_summary.html'"></ng-include>
     <!-- end reporting methods summary -->
     <!-- start workspaces summary -->
-    <ng-include ng-if="overviews.services" src="'views/templates/dashboards/overviews/workspace_summary.html'"></ng-include>
+    <ng-include ng-if="overviews.workspaces && overviews.workspaces.length > 0" src="'views/templates/dashboards/overviews/workspace_summary.html'"></ng-include>
     <!-- end workspaces summary -->
   </ion-content>
 </ion-view>

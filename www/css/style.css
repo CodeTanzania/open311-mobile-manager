@@ -436,10 +436,15 @@ input.input-bordered:focus {
 }
 
 .dawasco-warning-note {
-  font-size: 12px;
+  font-size: 13px;
   text-align: center;
   font-style: italic;
-  border-left: 2px solid #f5c203;
+  padding-top: 20px;
+  color: #504e4e;
+}
+
+.dawasco-warning-note.center {
+  margin-top: 50%;
 }
 
 .item-header {
