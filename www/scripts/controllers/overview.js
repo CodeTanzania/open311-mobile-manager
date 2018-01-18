@@ -53,7 +53,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
     $scope.modalTitle = 'Overview Reports - Filters';
 
-    $ionicModal.fromTemplateUrl('views/templates/filters/filters.html', {
+    $ionicModal.fromTemplateUrl('views/templates/filters/overviewFilters.html', {
       scope: $scope,
       animation: 'slide-in-up'
     }).then(function (modal) {
