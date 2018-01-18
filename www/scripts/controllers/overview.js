@@ -28,7 +28,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
 
   //bind filters
   var defaultFilters = {
-    startedAt: moment().utc().startOf('date').toDate(),
+    startedAt: moment().utc().startOf('date').subtract(7, 'months').toDate(),
     endedAt: moment().utc().endOf('date').toDate(),
     statuses: [],
     services: [],
@@ -143,6 +143,7 @@ function DashboardOverviewCtrl($q, $rootScope, $scope, $state, $ionicModal, $ion
    */
   $scope.prepareJurisdictionsVisualization = function (column) {
 
+    console.log('clicked');
     //ensure column
     column = column || 'count';
 

@@ -8,6 +8,14 @@
 
   <echart config="perJurisdictionConfig" options="perJurisdictionOptions"></echart>
 
+  <!-- start of comparison buttons -->
+  <div class="button-bar padding">
+    <button class="button button-outline button-positive" ng-click="prepareJurisdictionsVisualization('count')">Total</button>
+    <button class="button button-outline button-positive" ng-click="prepareJurisdictionsVisualization('pending')">Pending</button>
+    <button class="button button-outline button-positive" ng-click="prepareJurisdictionsVisualization('resolved')">Resolved</button>
+  </div>
+  <!-- end of comparison buttons -->
+
   <a class="item" ng-repeat="jurisdiction in overviews.jurisdictions" ui-sref="app.dashboard.jurisdiction({jurisdiction:jurisdiction,startedAt:filters.startedAt,endedAt:filters.endedAt})">
 
     <!--start item header -->
